@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Second World - Moda Sostenible del Futuro</title>
+  <link rel="stylesheet" href="css/frontend.css?v=3">
+  <!-- Three.js para el logo 3D -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+  <!-- Space Background -->
+  <div class="space-background">
+    <div class="stars"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-container">
+      <div class="logo-section">
+        <img src="assets/images/logo.png" alt="Second World" class="logo" style="height: 45px;">
+        <span class="brand-name">Second World</span>
+      </div>
+      <nav class="nav-menu">
+        <a href="#" class="nav-link active">Inicio</a>
+        <a href="#stores" class="nav-link">Tiendas</a>
+        <a href="#productos" class="nav-link">Productos</a>
+        <a href="track-order.html" class="nav-link">Rastrear Orden</a>
+        <a href="#" class="nav-link">Contacto</a>
+      </nav>
+      <div style="display: flex; gap: 16px; align-items: center;">
+        <button class="cart-button" onclick="openCartModal()">
+          🛒 Carrito (<span id="cart-count">0</span>)
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section NUEVO -->
+  <section class="hero-new">
+    <div class="hero-new-container">
+      <!-- Texto a la izquierda -->
+      <div class="hero-content">
+        <h1>Moda Sostenible<br>Segunda Oportunidad</h1>
+        <p>
+          Descubre ropa de calidad a precios increíbles. Cuida el planeta 
+          mientras renuevas tu guardarropa con estilo. La moda del futuro 
+          es consciente, accesible y única.
+        </p>
+        <div class="hero-buttons">
+          <a href="#productos" class="btn btn-primary">Explorar Productos</a>
+          <a href="#stores" class="btn btn-secondary">Ver Tiendas</a>
+        </div>
+      </div>
+
+      <!-- Cuadro espacial a la derecha -->
+      <div class="hero-visual">
+        <canvas id="space-canvas"></canvas>
+        <div class="glow-effect"></div>
+        <div class="logo-overlay">
+  <div class="hero-brand-text">
+    <h2>Second World</h2>
+    <h3>Street Wear</h3>
+  </div>
+</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Flash Sales Carousel Section -->
+  <section class="flash-sales-section" id="flash-sales">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">🔥 ¡REMATES ESPECIALES!</h2>
+        <p class="section-subtitle">Aprovecha estos descuentos increíbles por tiempo limitado</p>
+      </div>
+      
+      <div class="carousel-container">
+        <button class="carousel-btn prev" onclick="moveCarousel(-1)">‹</button>
+        <div class="carousel-track" id="carousel-track">
+          <div class="loading">
+            <div class="loader"></div>
+            <p>Cargando productos en remate...</p>
+          </div>
+        </div>
+        <button class="carousel-btn next" onclick="moveCarousel(1)">›</button>
+      </div>
+
+      <div class="carousel-dots" id="carousel-dots"></div>
+    </div>
+  </section>
+
+  
+
+  <!-- Products Section -->
+  <section class="products-section" id="productos">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Productos Destacados</h2>
+        <p class="section-subtitle">Encuentra las mejores ofertas en ropa de segunda mano</p>
+      </div>
+
+      <!-- Filters -->
+      <div class="filters">
+        <div class="filters-row">
+          <div class="search-box">
+            <input type="text" id="search-input" class="search-input" placeholder="Buscar productos...">
+          </div>
+          <div class="filter-group">
+            <label class="filter-label">Tienda</label>
+            <select id="filter-store" class="filter-select">
+              <option value="">Todas las tiendas</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label class="filter-label">Categoría</label>
+            <select id="filter-category" class="filter-select">
+              <option value="">Todas las categorías</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label class="filter-label">Condición</label>
+            <select id="filter-condition" class="filter-select">
+              <option value="">Todas</option>
+              <option value="nuevo">Nuevo</option>
+              <option value="como_nuevo">Como Nuevo</option>
+              <option value="usado">Usado</option>
+              <option value="muy_usado">Muy Usado</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Products Grid -->
+      <div class="products-grid" id="products-grid">
+        <div class="loading">
+          <div class="loader"></div>
+          <p>Cargando productos...</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WhatsApp Float Button -->
+  <div class="whatsapp-float" onclick="joinWhatsApp()">
+    <svg viewBox="0 0 32 32">
+      <path d="M16 0c-8.837 0-16 7.163-16 16 0 2.825 0.737 5.607 2.137 8.048l-2.137 7.952 8.194-2.094c2.343 1.245 4.987 1.894 7.806 1.894 8.837 0 16-7.163 16-16s-7.163-16-16-16zM16 29.25c-2.444 0-4.819-0.662-6.894-1.912l-0.494-0.294-5.106 1.306 1.356-5.044-0.325-0.512c-1.369-2.169-2.087-4.669-2.087-7.231 0-7.456 6.069-13.525 13.525-13.525s13.525 6.069 13.525 13.525c0 7.456-6.044 13.525-13.5 13.525zM23.012 19.424c-0.387-0.194-2.287-1.125-2.641-1.256s-0.612-0.194-0.869 0.194c-0.256 0.387-0.994 1.256-1.219 1.512s-0.45 0.287-0.837 0.094c-0.387-0.194-1.637-0.606-3.119-1.931-1.15-1.031-1.931-2.306-2.156-2.694s-0.025-0.6 0.169-0.794c0.175-0.175 0.387-0.45 0.581-0.675s0.256-0.387 0.387-0.65c0.131-0.262 0.069-0.494-0.031-0.688s-0.869-2.094-1.194-2.869c-0.319-0.756-0.637-0.65-0.869-0.663-0.225-0.012-0.481-0.012-0.737-0.012s-0.675 0.094-1.031 0.481c-0.356 0.387-1.356 1.325-1.356 3.231s1.387 3.744 1.581 4.006c0.194 0.262 2.738 4.181 6.637 5.869 0.925 0.4 1.65 0.637 2.212 0.819 0.938 0.294 1.788 0.256 2.462 0.156 0.75-0.113 2.287-0.938 2.613-1.844s0.325-1.681 0.231-1.844c-0.094-0.162-0.356-0.256-0.744-0.45z"/>
+    </svg>
+  </div>
+
+  <!-- WhatsApp Banner -->
+  <div class="whatsapp-banner" id="whatsapp-banner">
+    <button class="banner-close" onclick="hideWhatsAppBanner()">×</button>
+    <div class="whatsapp-banner-content">
+      <h4>
+        <svg width="24" height="24" viewBox="0 0 32 32" fill="white">
+          <path d="M16 0c-8.837 0-16 7.163-16 16 0 2.825 0.737 5.607 2.137 8.048l-2.137 7.952 8.194-2.094c2.343 1.245 4.987 1.894 7.806 1.894 8.837 0 16-7.163 16-16s-7.163-16-16-16z"/>
+        </svg>
+        ¡Únete a nuestra comunidad!
+      </h4>
+      <p>Recibe ofertas exclusivas, tips de moda sostenible y entérate de nuevos productos antes que nadie.</p>
+      <button class="whatsapp-banner-btn" onclick="joinWhatsApp()">
+        Unirme al Grupo de WhatsApp
+      </button>
+    </div>
+  </div>
+
+  <!-- Cart Modal -->
+  <div class="cart-overlay" id="cart-overlay" onclick="closeCartModal()"></div>
+  <div class="cart-modal" id="cart-modal">
+    <div class="cart-header">
+      <h3>🛒 Tu Carrito</h3>
+      <button class="close-cart" onclick="closeCartModal()">×</button>
+    </div>
+    <div class="cart-body" id="cart-body"></div>
+    <div class="cart-footer" id="cart-footer">
+      <div class="cart-summary">
+        <div class="summary-row">
+          <span>Subtotal:</span>
+          <span id="cart-subtotal">₡0.00</span>
+        </div>
+        <div class="summary-row">
+          <span>Envío:</span>
+          <span id="cart-shipping">₡2,500.00</span>
+        </div>
+        <div class="summary-row total">
+          <span>Total:</span>
+          <span id="cart-total">₡0.00</span>
+        </div>
+      </div>
+      <button class="checkout-btn" onclick="goToCheckout()">
+        Proceder al Pago
+      </button>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="js/frontend.js"></script>
+</body>
+</html>

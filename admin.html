@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Administrador - SecondStyle</title>
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+  <!-- Login Screen -->
+  <div id="login-screen" class="login-container">
+    <div class="login-box">
+      <h1>🔐 Admin Panel</h1>
+      <p>Ingresa tus credenciales de administrador</p>
+      
+      <div id="login-error" class="error-message hidden"></div>
+      
+      <form id="login-form">
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="login-email" placeholder="admin@tienda.com" required>
+        </div>
+        <div class="form-group">
+          <label>Contraseña</label>
+          <input type="password" id="login-password" placeholder="Tu contraseña" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+      </form>
+      
+      <p style="margin-top: 20px; text-align: center; color: #999; font-size: 0.9em;">
+        Usa: admin@tienda.com / admin123
+      </p>
+    </div>
+  </div>
+
+  <!-- Admin Panel -->
+  <div id="admin-panel" class="admin-panel hidden">
+    <div class="admin-header">
+      <h1>
+        <span>👨‍💼</span>
+        Panel de Administrador
+        <span id="admin-name" style="font-size: 0.6em; color: #666;"></span>
+      </h1>
+      <button class="logout-btn" onclick="logout()">Cerrar Sesión</button>
+    </div>
+
+    <div class="tabs">
+      <div class="tab active" onclick="showTab('products')">📦 Productos</div>
+      <div class="tab" onclick="showTab('stores')">🏪 Tiendas</div>
+      <div class="tab" onclick="showTab('categories')">📁 Categorías</div>
+      <div class="tab" onclick="showTab('discounts')">💰 Descuentos Programados</div>
+      <div class="tab" onclick="showTab('orders')">🛒 Órdenes</div>
+      <div class="tab" onclick="showTab('users')">👥 Usuarios</div>
+    </div>
+
+    <div id="success-message" class="success-message hidden"></div>
+
+    <!-- Products Section -->
+    <div id="products-section" class="content-section active">
+      <div class="form-card">
+        <h2 id="product-form-title">➕ Agregar Nuevo Producto</h2>
+        <form id="product-form">
+          <input type="hidden" id="product-id">
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nombre del Producto *</label>
+              <input type="text" id="product-name" placeholder="Ej: Camiseta Vintage" required>
+            </div>
+            <div class="form-group">
+              <label>Precio (₡) *</label>
+              <input type="number" id="product-price" placeholder="10000" min="0" step="0.01" required>
+            </div>
+          </div>
+
+          <div class="form-row three">
+            <div class="form-group">
+              <label>Tienda *</label>
+              <select id="product-store" required>
+                <option value="">Seleccionar tienda...</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Categoría *</label>
+              <select id="product-category" required>
+                <option value="">Seleccionar categoría...</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Condición *</label>
+              <select id="product-condition" required>
+                <option value="nuevo">🆕 Nuevo</option>
+                <option value="como_nuevo">✨ Como Nuevo</option>
+                <option value="usado" selected>👕 Usado</option>
+                <option value="muy_usado">⚠️ Muy Usado</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row three">
+            <div class="form-group">
+              <label>Stock *</label>
+              <input type="number" id="product-stock" placeholder="10" min="0" value="0" required>
+            </div>
+            <div class="form-group">
+              <label>Descuento (%)</label>
+              <input type="number" id="product-discount" placeholder="0" min="0" max="100" value="0">
+            </div>
+            <div class="form-group">
+              <label>Talla</label>
+              <input type="text" id="product-size" placeholder="M, L, 32, etc.">
+            </div>
+          </div>
+
+          <div class="form-row full">
+            <div class="form-group">
+              <label>Imagen del Producto *</label>
+              <input type="file" id="product-image" accept="image/*" required>
+              <small style="color: #999; display: block; margin-top: 5px;">Formatos: JPG, PNG, WebP (Máx. 5MB)</small>
+            </div>
+          </div>
+
+          <div class="form-row full">
+            <div class="form-group">
+              <label>Descripción</label>
+              <textarea id="product-description" placeholder="Descripción detallada del producto..."></textarea>
+            </div>
+          </div>
+
+          <div class="form-row full">
+            <div class="checkbox-group">
+              <input type="checkbox" id="product-flash-sale">
+              <label for="product-flash-sale">🔥 Marcar como REMATE (Super Descuento)</label>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button type="submit" class="btn btn-success" id="product-submit-btn">Agregar Producto</button>
+            <button type="button" class="btn btn-danger hidden" id="product-cancel-btn" onclick="cancelProductEdit()">Cancelar</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="table-card">
+        <h2>📋 Lista de Productos</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Imagen</th>
+              <th>Nombre</th>
+              <th>Tienda</th>
+              <th>Categoría</th>
+              <th>Precio</th>
+              <th>Descuento</th>
+              <th>Stock</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="products-tbody">
+            <tr><td colspan="9" style="text-align: center;">Cargando...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Stores Section -->
+    <div id="stores-section" class="content-section">
+      <div class="form-card">
+        <h2 id="store-form-title">➕ Agregar Nueva Tienda</h2>
+        <form id="store-form">
+          <input type="hidden" id="store-id">
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nombre de la Tienda *</label>
+              <input type="text" id="store-name" placeholder="Ej: SecondKids" required>
+            </div>
+            <div class="form-group">
+              <label>Logo de la Tienda</label>
+              <input type="file" id="store-logo" accept="image/*">
+              <small style="color: #999; display: block; margin-top: 5px;">Formatos: JPG, PNG, WebP</small>
+            </div>
+          </div>
+
+          <div class="form-row full">
+            <div class="form-group">
+              <label>Descripción</label>
+              <textarea id="store-description" placeholder="Descripción de la tienda..."></textarea>
+            </div>
+          </div>
+
+          <div class="form-row full">
+            <div class="checkbox-group">
+              <input type="checkbox" id="store-active" checked>
+              <label for="store-active">✅ Tienda Activa</label>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button type="submit" class="btn btn-success">Guardar Tienda</button>
+            <button type="button" class="btn btn-danger hidden" id="store-cancel-btn" onclick="cancelStoreEdit()">Cancelar</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="table-card">
+        <h2>🏪 Lista de Tiendas</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Logo</th>
+              <th>Nombre</th>
+              <th>Descripción</th>
+              <th>Estado</th>
+              <th>Productos</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="stores-tbody">
+            <tr><td colspan="6" style="text-align: center;">Cargando...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Categories Section -->
+    <div id="categories-section" class="content-section">
+      <div class="form-card">
+        <h2 id="category-form-title">➕ Agregar Nueva Categoría</h2>
+        <form id="category-form">
+          <input type="hidden" id="category-id">
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nombre de la Categoría *</label>
+              <input type="text" id="category-name" placeholder="Ej: Camisetas" required>
+            </div>
+            <div class="form-group">
+              <label>Tienda *</label>
+              <select id="category-store" required>
+                <option value="">Seleccionar tienda...</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row full">
+            <div class="form-group">
+              <label>Imagen de Categoría</label>
+              <input type="file" id="category-image" accept="image/*">
+              <small style="color: #999; display: block; margin-top: 5px;">Formatos: JPG, PNG, WebP</small>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button type="submit" class="btn btn-success">Guardar Categoría</button>
+            <button type="button" class="btn btn-danger hidden" id="category-cancel-btn" onclick="cancelCategoryEdit()">Cancelar</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="table-card">
+        <h2>📁 Lista de Categorías</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Imagen</th>
+              <th>Nombre</th>
+              <th>Tienda</th>
+              <th>Productos</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="categories-tbody">
+            <tr><td colspan="5" style="text-align: center;">Cargando...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Orders Section -->
+    <div id="orders-section" class="content-section">
+      <div class="table-card">
+        <h2>🛒 Órdenes de Compra</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Cliente</th>
+              <th>Fecha</th>
+              <th>Total</th>
+              <th>SINPE</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="orders-tbody">
+            <tr><td colspan="7" style="text-align: center;">Cargando...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Scheduled Discounts Section -->
+    <div id="discounts-section" class="content-section">
+      <div class="form-card">
+        <h2 id="discount-form-title">💰 Crear Descuento Programado</h2>
+        <form id="discount-form">
+          <input type="hidden" id="discount-id">
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nombre de la Promoción *</label>
+              <input type="text" id="discount-name" placeholder="Ej: Black Friday 2026" required>
+            </div>
+            <div class="form-group">
+              <label>Porcentaje de Descuento (%) *</label>
+              <input type="number" id="discount-percentage" placeholder="50" min="0" max="100" step="0.01" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Fecha de Inicio *</label>
+              <input type="datetime-local" id="discount-start" required>
+            </div>
+            <div class="form-group">
+              <label>Fecha de Fin *</label>
+              <input type="datetime-local" id="discount-end" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Aplicar a Tienda (opcional)</label>
+              <select id="discount-store">
+                <option value="">Todas las tiendas</option>
+              </select>
+              <small style="color: #999; display: block; margin-top: 4px;">
+                Si no seleccionas ninguna, el descuento se aplicará a TODAS las tiendas
+              </small>
+            </div>
+            <div class="form-group">
+              <div class="checkbox-group">
+                <input type="checkbox" id="discount-active" checked>
+                <label for="discount-active">✅ Activar inmediatamente</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button type="submit" class="btn btn-success">Crear Descuento</button>
+            <button type="button" class="btn btn-danger hidden" id="discount-cancel-btn" onclick="cancelDiscountEdit()">Cancelar</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="table-card">
+        <h2>📋 Descuentos Programados</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Descuento</th>
+              <th>Tienda</th>
+              <th>Inicio</th>
+              <th>Fin</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="discounts-tbody">
+            <tr><td colspan="7" style="text-align: center;">Cargando...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Users Section -->
+    <div id="users-section" class="content-section">
+      <div class="table-card">
+        <h2>👥 Usuarios Registrados</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>Rol</th>
+              <th>Fecha de Registro</th>
+            </tr>
+          </thead>
+          <tbody id="users-tbody">
+            <tr><td colspan="5" style="text-align: center;">Cargando...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>
