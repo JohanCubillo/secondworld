@@ -27,7 +27,7 @@ const OrderSchema = {
   },
   customerIdNumber: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,  // ← Cambia false a true
     field: 'customer_id_number',
     comment: 'Cédula del cliente',
   },

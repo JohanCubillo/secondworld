@@ -388,3 +388,195 @@ tr:hover {
     margin-right: 0 !important;
   }
 }
+/* ============================================
+   RESPONSIVE DESIGN - MEDIA QUERIES
+   ============================================ */
+
+/* Tablets y pantallas medianas (768px - 1024px) */
+@media (max-width: 1024px) {
+  .admin-panel {
+    padding: 15px;
+  }
+
+  .form-row.three {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  table {
+    min-width: 700px;
+  }
+}
+
+/* Móviles y tablets pequeñas (hasta 768px) */
+@media (max-width: 768px) {
+  /* Login Box */
+  .login-box {
+    padding: 30px 20px;
+  }
+
+  .login-box h1 {
+    font-size: 1.8em;
+  }
+
+  /* Admin Header */
+  .admin-header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+  }
+
+  .admin-header h1 {
+    font-size: 1.3em;
+    text-align: center;
+  }
+
+  .logout-btn {
+    width: 100%;
+  }
+
+  /* Tabs - Scroll horizontal */
+  .tabs {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    gap: 10px;
+    padding-bottom: 10px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tab {
+    padding: 12px 20px;
+    white-space: nowrap;
+    font-size: 0.9em;
+  }
+
+  /* Forms - Una columna */
+  .form-row,
+  .form-row.three {
+    grid-template-columns: 1fr;
+  }
+
+  .form-card {
+    padding: 20px;
+  }
+
+  .form-card h2 {
+    font-size: 1.3em;
+  }
+
+  /* Tablas - Scroll horizontal */
+  .table-card {
+    padding: 15px;
+    overflow-x: auto;
+  }
+
+  table {
+    font-size: 0.85em;
+  }
+
+  th, td {
+    padding: 10px 8px;
+  }
+
+  .product-image {
+    width: 50px;
+    height: 50px;
+  }
+
+  /* Botones de acción */
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-buttons .btn {
+    width: 100%;
+  }
+
+  .btn-edit,
+  .btn-danger {
+    margin-right: 0;
+    margin-bottom: 8px;
+  }
+}
+
+/* Móviles pequeños (hasta 480px) */
+@media (max-width: 480px) {
+  .login-box {
+    padding: 25px 15px;
+  }
+
+  .login-box h1 {
+    font-size: 1.5em;
+  }
+
+  .admin-header h1 {
+    font-size: 1.1em;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .tabs {
+    gap: 8px;
+  }
+
+  .tab {
+    padding: 10px 15px;
+    font-size: 0.85em;
+  }
+
+  .form-card,
+  .table-card {
+    padding: 15px;
+    margin-bottom: 20px;
+  }
+
+  table {
+    font-size: 0.75em;
+    min-width: 600px;
+  }
+
+  th, td {
+    padding: 8px 5px;
+  }
+
+  .product-image {
+    width: 40px;
+    height: 40px;
+  }
+
+  .btn {
+    font-size: 0.9em;
+    padding: 10px 15px;
+  }
+}
+
+/* Mejoras de usabilidad táctil */
+@media (hover: none) and (pointer: coarse) {
+  /* Aumentar áreas táctiles en móviles */
+  .btn {
+    min-height: 44px;
+  }
+
+  .tab {
+    min-height: 44px;
+  }
+
+  input, select, textarea {
+    font-size: 16px; /* Evita zoom automático en iOS */
+  }
+}
+
+/* Landscape mode en móviles */
+@media (max-width: 768px) and (orientation: landscape) {
+  .admin-header {
+    padding: 15px;
+  }
+
+  .admin-header h1 {
+    font-size: 1.2em;
+  }
+
+  .tabs {
+    margin-bottom: 15px;
+  }
+}
+

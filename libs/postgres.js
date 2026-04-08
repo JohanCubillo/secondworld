@@ -1,5 +1,9 @@
 const { Pool } = require('pg');
-const config = require('../config/config');
+const { config } = require('../config/config');
+
+console.log('🔍 DEBUG postgres.js - Variables de configuración:');
+console.log('   DB_USER:', config.dbUser);
+console.log('   DB_DATABASE:', config.dbDatabase);
 
 const USER = encodeURIComponent(config.dbUser);
 const PASSWORD = encodeURIComponent(config.dbPassword);

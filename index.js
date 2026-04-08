@@ -26,6 +26,8 @@ app.use(cors(corsOptions));
 // Middleware para parsear JSON (aumentar límite para imágenes base64)
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
+// Servir archivos estáticos (HTML, CSS, JS, imágenes)
+app.use(express.static(__dirname));	
 
 // LOGS DE DEBUG
 app.use((req, res, next) => {
@@ -36,9 +38,8 @@ app.use((req, res, next) => {
   next();
 });
 
-// Rutas principales
 app.get('/', (req, res) => {
-  res.send('Hola, bienvenido a mi servidor en Express');
+  res.sendFile(__dirname + '/index.html');
 });
 
 app.get('/nueva-ruta', (req, res) => {

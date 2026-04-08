@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3001/api/v1';
+const API_URL = '/api/v1';
 let currentUser = null;
 let stores = [];
 let categories = [];
