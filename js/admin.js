@@ -766,7 +766,7 @@ function cancelProductEdit() {
   document.getElementById('product-submit-btn').textContent = 'Agregar Producto';
   document.getElementById('product-cancel-btn').classList.add('hidden');
   document.getElementById('product-image').setAttribute('required', 'required');
-  document.getElementById('extra-images-section').style.display = 'none';
+  const extraSection = document.getElementById('extra-images-section'); if (extraSection) extraSection.style.display = 'none';
   productoEditandoId = null;
 }
 
