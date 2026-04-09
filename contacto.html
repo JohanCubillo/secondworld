@@ -6,96 +6,111 @@
   <title>Contacto - Second World</title>
   <link rel="stylesheet" href="css/frontend.css?v=3">
   <style>
-    .contacto-hero {
-      padding: 120px 24px 60px;
-      text-align: center;
-      color: white;
-    }
-    .contacto-hero h1 {
-      font-size: 48px;
-      font-weight: 800;
-      margin-bottom: 16px;
-      text-shadow: 0 0 40px rgba(102,126,234,0.8);
-    }
-    .contacto-hero p { font-size: 18px; color: rgba(255,255,255,0.7); }
-    .contacto-container {
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 0 24px 80px;
+    .page-wrap {
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      align-items: center;
+      padding: 120px 20px 80px;
     }
-    .info-card {
+    .page-title {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .page-title h1 {
+      font-size: 44px;
+      font-weight: 800;
+      color: white;
+      margin-bottom: 10px;
+      text-shadow: 0 0 40px rgba(102,126,234,0.8);
+    }
+    .page-title p {
+      font-size: 17px;
+      color: rgba(255,255,255,0.65);
+    }
+    .contact-box {
+      width: 100%;
+      max-width: 520px;
       background: white;
-      border-radius: 20px;
-      padding: 32px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.35);
     }
-    .info-card h2 { font-size: 20px; font-weight: 700; color: #1a1f3a; margin-bottom: 24px; }
-    .info-item {
-      display: flex;
-      gap: 14px;
-      align-items: flex-start;
-      padding: 14px 0;
-      border-bottom: 1px solid #f0f4ff;
-    }
-    .info-item:last-child { border-bottom: none; }
-    .info-icon {
-      width: 42px;
-      height: 42px;
+    .contact-header {
       background: linear-gradient(135deg, #667eea, #764ba2);
-      border-radius: 10px;
+      padding: 28px 32px;
+      color: white;
+    }
+    .contact-header h2 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .contact-header p {
+      font-size: 13px;
+      opacity: 0.85;
+    }
+    .social-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+    }
+    .social-pill {
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      flex-shrink: 0;
-    }
-    .info-text h4 { font-size: 13px; font-weight: 700; color: #a0aec0; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
-    .info-text a, .info-text p { font-size: 14px; color: #4a5568; text-decoration: none; margin: 0; }
-    .info-text a:hover { color: #667eea; }
-    .redes { display: flex; gap: 10px; margin-top: 20px; }
-    .red-btn {
-      flex: 1;
-      padding: 10px;
-      border-radius: 10px;
+      gap: 6px;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 99px;
+      padding: 6px 14px;
+      color: white;
       text-decoration: none;
       font-size: 12px;
       font-weight: 600;
-      text-align: center;
       transition: all 0.2s;
     }
-    .red-ig { background: #fce4ec; color: #E1306C; }
-    .red-tt { background: #f0f0f0; color: #000; }
-    .red-wa { background: #e8f5e9; color: #25D366; }
-    .red-btn:hover { transform: translateY(-2px); }
-
-    .form-card {
-      background: white;
-      border-radius: 20px;
-      padding: 36px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    .social-pill:hover { background: rgba(255,255,255,0.25); }
+    .social-pill svg { width: 14px; height: 14px; fill: white; flex-shrink: 0; }
+    .contact-form {
+      padding: 28px 32px;
     }
-    .form-card h2 { font-size: 20px; font-weight: 700; color: #1a1f3a; margin-bottom: 24px; }
-    .form-group { margin-bottom: 16px; }
-    .form-row { display: grid; grid-template-columns: 1fr; gap: 0; }
-    .form-label { display: block; font-size: 12px; font-weight: 700; color: #4a5568; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
-    .form-input {
+    .field {
+      margin-bottom: 16px;
+    }
+    .field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: #718096;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin-bottom: 6px;
+    }
+    .field input,
+    .field select,
+    .field textarea {
       width: 100%;
-      padding: 12px 14px;
-      border: 2px solid #e2e8f0;
+      padding: 11px 14px;
+      border: 1.5px solid #e2e8f0;
       border-radius: 10px;
       font-size: 14px;
       color: #2d3748;
-      transition: all 0.2s;
       font-family: inherit;
+      transition: border-color 0.2s;
+      background: white;
+      box-sizing: border-box;
     }
-    .form-input:focus { outline: none; border-color: #667eea; box-shadow: 0 0 0 3px rgba(102,126,234,0.1); }
-    textarea.form-input { resize: vertical; min-height: 120px; }
-    .submit-btn {
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102,126,234,0.12);
+    }
+    .field textarea { resize: vertical; min-height: 110px; }
+    .send-btn {
       width: 100%;
-      padding: 14px;
+      padding: 13px;
       background: linear-gradient(135deg, #667eea, #764ba2);
       color: white;
       border: none;
@@ -104,31 +119,33 @@
       font-weight: 700;
       cursor: pointer;
       transition: all 0.2s;
-      box-shadow: 0 6px 20px rgba(102,126,234,0.4);
+      margin-top: 4px;
     }
-    .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(102,126,234,0.5); }
-    .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-    .success-msg {
+    .send-btn:hover { opacity: 0.92; transform: translateY(-1px); }
+    .send-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .feedback {
       display: none;
-      background: #f0fff4;
-      border: 1px solid #9ae6b4;
-      border-radius: 12px;
-      padding: 16px;
-      text-align: center;
-      color: #276749;
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 14px;
       font-weight: 600;
-      margin-top: 16px;
-    }
-    .error-msg {
-      display: none;
-      background: #fff5f5;
-      border: 1px solid #fed7d7;
-      border-radius: 12px;
-      padding: 16px;
       text-align: center;
-      color: #c53030;
-      margin-top: 16px;
+      margin-top: 14px;
     }
+    .feedback.ok { background: #f0fff4; color: #276749; border: 1px solid #9ae6b4; }
+    .feedback.err { background: #fff5f5; color: #c53030; border: 1px solid #fed7d7; }
+    .wa-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 20px;
+      color: #25D366;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .wa-link:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -137,7 +154,7 @@
   <header class="header">
     <div class="header-container">
       <div class="logo-section">
-        <img src="assets/images/logo.png" alt="Second World" class="logo" style="height: 45px;">
+        <img src="assets/images/logo.png" alt="Second World" class="logo" style="height:45px">
         <span class="brand-name">Second World</span>
       </div>
       <nav class="nav-menu">
@@ -148,136 +165,118 @@
         <a href="contacto.html" class="nav-link active">Contacto</a>
         <a href="politicas.html" class="nav-link">Políticas</a>
       </nav>
-      <div style="display:flex;gap:16px;align-items:center;">
+      <div style="display:flex;gap:16px;align-items:center">
         <button class="cart-button" onclick="openCartModal()">🛒 Carrito (<span id="cart-count">0</span>)</button>
       </div>
     </div>
   </header>
 
-  <div class="contacto-hero">
-    <h1>💬 Contacto</h1>
-    <p>Estamos aquí para ayudarte con cualquier consulta</p>
-  </div>
-
-  <div class="contacto-container">
-    <!-- Info -->
-    <div class="info-card">
-      <h2>📍 Información</h2>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-        <div class="info-item" style="border:none;padding:10px 0">
-          <div class="info-icon">📱</div>
-          <div class="info-text"><h4>WhatsApp</h4><a href="https://wa.me/50670259400" target="_blank">+506 7025-9400</a></div>
-        </div>
-        <div class="info-item" style="border:none;padding:10px 0">
-          <div class="info-icon">🌍</div>
-          <div class="info-text"><h4>Ubicación</h4><p>Costa Rica 🇨🇷</p></div>
-        </div>
-        <div class="info-item" style="border:none;padding:10px 0">
-          <div class="info-icon">🚚</div>
-          <div class="info-text"><h4>Envíos</h4><p>Correos CR</p></div>
-        </div>
-        <div class="info-item" style="border:none;padding:10px 0">
-          <div class="info-icon">⏰</div>
-          <div class="info-text"><h4>Horario</h4><p>Lun-Sáb, 8am-8pm</p></div>
-        </div>
-      </div>
-
-      <h2 style="margin-top:24px">📲 Redes Sociales</h2>
-      <div class="redes">
-        <a href="https://www.instagram.com/second_worldd_/" target="_blank" class="red-btn red-ig">📸 Instagram</a>
-        <a href="https://www.tiktok.com/@second_worldd_" target="_blank" class="red-btn red-tt">🎵 TikTok</a>
-        <a href="https://chat.whatsapp.com/GfkJGaVSpRkKsvehGx5Oo2" target="_blank" class="red-btn red-wa">💬 Grupo</a>
-      </div>
+  <div class="page-wrap">
+    <div class="page-title">
+      <h1>Contacto</h1>
+      <p>Escribinos y te respondemos lo antes posible</p>
     </div>
 
-    <!-- Formulario -->
-    <div class="form-card">
-      <h2>✉️ Envianos un mensaje</h2>
-      <form id="contacto-form">
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Nombre *</label>
-            <input type="text" class="form-input" id="c-nombre" placeholder="Tu nombre" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Email *</label>
-            <input type="email" class="form-input" id="c-email" placeholder="tu@email.com" required>
-          </div>
+    <div class="contact-box">
+      <div class="contact-header">
+        <h2>Segunda mano, primera atención</h2>
+        <p>También podés escribirnos directamente por redes</p>
+        <div class="social-row">
+          <a href="https://wa.me/50670259400" target="_blank" class="social-pill">
+            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WhatsApp
+          </a>
+          <a href="https://www.instagram.com/second_worldd_/" target="_blank" class="social-pill">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            Instagram
+          </a>
+          <a href="https://www.tiktok.com/@second_worldd_" target="_blank" class="social-pill">
+            <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.75a4.85 4.85 0 01-1.01-.06z"/></svg>
+            TikTok
+          </a>
         </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Teléfono</label>
-            <input type="text" class="form-input" id="c-telefono" placeholder="8888-8888">
+      </div>
+
+      <div class="contact-form">
+        <form id="cf">
+          <div class="field">
+            <label>Nombre *</label>
+            <input type="text" id="cf-nombre" placeholder="Tu nombre completo" required>
           </div>
-          <div class="form-group">
-            <label class="form-label">Asunto *</label>
-            <select class="form-input" id="c-asunto" required>
-              <option value="">Seleccionar...</option>
-              <option value="Consulta sobre producto">Consulta sobre producto</option>
-              <option value="Estado de mi pedido">Estado de mi pedido</option>
-              <option value="Problema con mi compra">Problema con mi compra</option>
-              <option value="Información de envío">Información de envío</option>
-              <option value="Otro">Otro</option>
+          <div class="field">
+            <label>Email *</label>
+            <input type="email" id="cf-email" placeholder="tu@email.com" required>
+          </div>
+          <div class="field">
+            <label>Teléfono</label>
+            <input type="text" id="cf-tel" placeholder="8888-8888">
+          </div>
+          <div class="field">
+            <label>Asunto *</label>
+            <select id="cf-asunto" required>
+              <option value="">Seleccioná el motivo...</option>
+              <option>Consulta sobre producto</option>
+              <option>Estado de mi pedido</option>
+              <option>Problema con mi compra</option>
+              <option>Información de envío</option>
+              <option>Otro</option>
             </select>
           </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Mensaje *</label>
-          <textarea class="form-input" id="c-mensaje" placeholder="Escribí tu consulta aquí..." required></textarea>
-        </div>
-        <button type="submit" class="submit-btn" id="c-btn">📤 Enviar Mensaje</button>
-        <div class="success-msg" id="c-success">✅ ¡Mensaje enviado! Te responderemos pronto.</div>
-        <div class="error-msg" id="c-error">❌ Error al enviar. Intentá de nuevo.</div>
-      </form>
+          <div class="field">
+            <label>Mensaje *</label>
+            <textarea id="cf-msg" placeholder="Escribí tu consulta aquí..." required></textarea>
+          </div>
+          <button type="submit" class="send-btn" id="cf-btn">Enviar mensaje</button>
+          <div class="feedback ok" id="cf-ok">Mensaje enviado. Te respondemos pronto.</div>
+          <div class="feedback err" id="cf-err">Error al enviar. Intentá de nuevo.</div>
+        </form>
+        <a href="https://wa.me/50670259400" target="_blank" class="wa-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          O escribinos directo al +506 7025-9400
+        </a>
+      </div>
     </div>
   </div>
 
   <script src="js/frontend.js"></script>
   <script>
-    const API_URL = '/api/v1';
-
-    document.getElementById('contacto-form').addEventListener('submit', async (e) => {
+    document.getElementById('cf').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const btn = document.getElementById('c-btn');
-      const success = document.getElementById('c-success');
-      const error = document.getElementById('c-error');
+      const btn = document.getElementById('cf-btn');
+      const ok = document.getElementById('cf-ok');
+      const err = document.getElementById('cf-err');
       btn.disabled = true;
-      btn.textContent = '⏳ Enviando...';
-      success.style.display = 'none';
-      error.style.display = 'none';
+      btn.textContent = 'Enviando...';
+      ok.style.display = 'none';
+      err.style.display = 'none';
       try {
-        const res = await fetch(`${API_URL}/contacto`, {
+        const res = await fetch('/api/v1/contacto', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            nombre: document.getElementById('c-nombre').value,
-            email: document.getElementById('c-email').value,
-            telefono: document.getElementById('c-telefono').value,
-            asunto: document.getElementById('c-asunto').value,
-            mensaje: document.getElementById('c-mensaje').value
+            nombre: document.getElementById('cf-nombre').value,
+            email: document.getElementById('cf-email').value,
+            telefono: document.getElementById('cf-tel').value,
+            asunto: document.getElementById('cf-asunto').value,
+            mensaje: document.getElementById('cf-msg').value
           })
         });
         if (res.ok) {
-          success.style.display = 'block';
-          document.getElementById('contacto-form').reset();
-        } else {
-          error.style.display = 'block';
-        }
-      } catch(err) {
-        error.style.display = 'block';
-      } finally {
+          ok.style.display = 'block';
+          document.getElementById('cf').reset();
+        } else { err.style.display = 'block'; }
+      } catch { err.style.display = 'block'; }
+      finally {
         btn.disabled = false;
-        btn.textContent = '📤 Enviar Mensaje';
+        btn.textContent = 'Enviar mensaje';
       }
     });
-
-    // Estrellas
-    const starsEl = document.querySelector('.stars');
-    for (let i = 0; i < 120; i++) {
-      const s = document.createElement('div');
-      s.className = 'star';
-      s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;width:${Math.random()*2+1}px;height:${Math.random()*2+1}px;animation-delay:${Math.random()*3}s;animation-duration:${2+Math.random()*3}s`;
-      starsEl.appendChild(s);
+    const s = document.querySelector('.stars');
+    for (let i = 0; i < 100; i++) {
+      const el = document.createElement('div');
+      el.className = 'star';
+      el.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;width:${Math.random()*2+1}px;height:${Math.random()*2+1}px;animation-delay:${Math.random()*3}s;animation-duration:${2+Math.random()*3}s`;
+      s.appendChild(el);
     }
   </script>
 </body>
