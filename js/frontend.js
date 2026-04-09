@@ -682,11 +682,16 @@ function initSpaceBackground() {
 
 // ==================== INIT ====================
 document.addEventListener('DOMContentLoaded', () => {
-  // Filters
-  document.getElementById('search-input').addEventListener('input', filterProducts);
-  document.getElementById('filter-store').addEventListener('change', filterProducts);
-  document.getElementById('filter-category').addEventListener('change', filterProducts);
-  document.getElementById('filter-condition').addEventListener('change', filterProducts);
+  // Filters - solo si existen los elementos
+  const searchInput = document.getElementById('search-input');
+  const filterStore = document.getElementById('filter-store');
+  const filterCategory = document.getElementById('filter-category');
+  const filterCondition = document.getElementById('filter-condition');
+
+  if (searchInput) searchInput.addEventListener('input', filterProducts);
+  if (filterStore) filterStore.addEventListener('change', filterProducts);
+  if (filterCategory) filterCategory.addEventListener('change', filterProducts);
+  if (filterCondition) filterCondition.addEventListener('change', filterProducts);
 
   // Carousel scroll
   const track = document.getElementById('carousel-track');
