@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Políticas - Second World</title>
+  <link rel="stylesheet" href="css/frontend.css?v=3">
+  <style>
+    .politicas-hero {
+      padding: 120px 24px 60px;
+      text-align: center;
+      color: white;
+    }
+    .politicas-hero h1 {
+      font-size: 48px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      text-shadow: 0 0 40px rgba(102,126,234,0.8);
+    }
+    .politicas-hero p {
+      font-size: 18px;
+      color: rgba(255,255,255,0.7);
+    }
+    .politicas-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+    .politica-card {
+      background: white;
+      border-radius: 20px;
+      padding: 32px 36px;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+      animation: slideUp 0.4s ease;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .politica-card h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: #1a1f3a;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #f0f4ff;
+    }
+    .politica-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .politica-card ul li {
+      padding: 8px 0;
+      color: #4a5568;
+      font-size: 15px;
+      line-height: 1.6;
+      display: flex;
+      gap: 10px;
+      border-bottom: 1px solid #f7fafc;
+    }
+    .politica-card ul li:last-child {
+      border-bottom: none;
+    }
+    .politica-card ul li::before {
+      content: '→';
+      color: #667eea;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .contacto-card {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      border-radius: 20px;
+      padding: 32px 36px;
+      text-align: center;
+      color: white;
+      box-shadow: 0 10px 40px rgba(102,126,234,0.4);
+    }
+    .contacto-card h2 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .contacto-card p {
+      font-size: 15px;
+      opacity: 0.9;
+      margin-bottom: 20px;
+    }
+    .contacto-btn {
+      display: inline-block;
+      background: white;
+      color: #667eea;
+      padding: 12px 28px;
+      border-radius: 10px;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 15px;
+      transition: all 0.2s;
+    }
+    .contacto-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+  </style>
+</head>
+<body>
+  <div class="space-background"><div class="stars"></div></div>
+
+  <header class="header">
+    <div class="header-container">
+      <div class="logo-section">
+        <img src="assets/images/logo.png" alt="Second World" class="logo" style="height: 45px;">
+        <span class="brand-name">Second World</span>
+      </div>
+      <nav class="nav-menu">
+        <a href="index.html" class="nav-link">Inicio</a>
+        <a href="index.html#stores" class="nav-link">Tiendas</a>
+        <a href="index.html#productos" class="nav-link">Productos</a>
+        <a href="order-confirmation.html" class="nav-link">Rastrear Orden</a>
+        <a href="politicas.html" class="nav-link active">Políticas</a>
+      </nav>
+      <div style="display:flex;gap:16px;align-items:center;">
+        <button class="cart-button" onclick="openCartModal()">
+          🛒 Carrito (<span id="cart-count">0</span>)
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="politicas-hero">
+    <h1>📋 Políticas</h1>
+    <p>Todo lo que necesitás saber antes de comprar</p>
+  </div>
+
+  <div class="politicas-container">
+
+    <div class="politica-card">
+      <h2>🛒 Pedidos y Pagos</h2>
+      <ul>
+        <li>Los pedidos se confirman únicamente una vez recibido el comprobante de pago.</li>
+        <li>Métodos de pago aceptados: SINPE Móvil y transferencia bancaria.</li>
+        <li>Los productos no se reservan sin pago previo.</li>
+      </ul>
+    </div>
+
+    <div class="politica-card">
+      <h2>🚚 Envíos</h2>
+      <ul>
+        <li>Envíos por Correos de Costa Rica.</li>
+        <li>El costo de envío corre por cuenta del cliente y se calcula según zona.</li>
+        <li>El tiempo de entrega puede variar entre 1 y 3 días hábiles después del envío.</li>
+        <li>Se realizan los envíos desde 1 a 2 días hábiles después de la compra.</li>
+        <li>Se realizan únicamente los envíos de los clientes que rellenaron el formulario, si no quedará para la siguiente semana.</li>
+      </ul>
+    </div>
+
+    <div class="politica-card">
+      <h2>🔄 Cambios y Devoluciones</h2>
+      <ul>
+        <li>No se hacen devoluciones de dinero.</li>
+        <li>No se hacen cambios.</li>
+      </ul>
+    </div>
+
+    <div class="politica-card">
+      <h2>📌 Información Importante</h2>
+      <ul>
+        <li>Verificá bien tallas, colores y detalles antes de realizar tu compra.</li>
+        <li>Todas nuestras piezas son revisadas antes de ser enviadas.</li>
+        <li>Al comprar con nosotros, aceptás todas estas políticas.</li>
+      </ul>
+    </div>
+
+    <div class="contacto-card">
+      <h2>💬 ¿Tenés consultas?</h2>
+      <p>Para consultas, pedidos o más información, escribinos por DM o WhatsApp</p>
+      <a href="https://wa.me/50600000000" class="contacto-btn">📱 Escribinos por WhatsApp</a>
+    </div>
+
+  </div>
+
+  <script src="js/frontend.js"></script>
+  <script>
+    const starsEl = document.querySelector('.stars');
+    for (let i = 0; i < 120; i++) {
+      const s = document.createElement('div');
+      s.className = 'star';
+      s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;width:${Math.random()*2+1}px;height:${Math.random()*2+1}px;animation-delay:${Math.random()*3}s;animation-duration:${2+Math.random()*3}s`;
+      starsEl.appendChild(s);
+    }
+  </script>
+</body>
+</html>
