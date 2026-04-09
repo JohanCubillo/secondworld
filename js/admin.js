@@ -714,7 +714,7 @@ document.getElementById('product-form').addEventListener('submit', async (e) => 
     }
 
     showSuccess(productId ? 'Producto actualizado exitosamente' : 'Producto agregado exitosamente');
-    document.getElementById('preview-imagenes').innerHTML = '';
+    const preview = document.getElementById('preview-imagenes'); if (preview) preview.innerHTML = '';
     document.getElementById('product-form').reset();
     cancelProductEdit();
     loadProducts();
