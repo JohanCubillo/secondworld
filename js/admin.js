@@ -49,8 +49,75 @@ function showTab(tab) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   event.target.classList.add('active');
   
-  document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-  document.getElementById(tab + '-section').classList.add('active');
+  document.querySelectorAll('.content-section').forEach(s => {
+    s.classList.remove('active');
+    s.style.display = 'none';
+  });
+  const section = document.getElementById(tab + '-section');
+  section.classList.add('active');
+  section.style.display = 'block';
+
+  if (tab === 'expirando') loadExpirando();
+}
+
+async function loadExpirando() {
+  const loading = document.getElementById('expirando-loading');
+  const empty = document.getElementById('expirando-empty');
+  const grid = document.getElementById('expirando-grid');
+
+  loading.style.display = 'block';
+  empty.style.display = 'none';
+  grid.style.display = 'none';
+
+  try {
+    const res = await fetch(`${API_URL}/products/expirando`);
+    const productos = await res.json();
+
+    loading.style.display = 'none';
+
+    if (!productos.length) {
+      empty.style.display = 'block';
+      // Actualizar tab sin badge
+      document.getElementById('tab-expirando').textContent = '⏳ Por Expirar';
+      return;
+    }
+
+    // Actualizar tab con badge
+    document.getElementById('tab-expirando').textContent = `⏳ Por Expirar (${productos.length})`;
+
+    grid.style.display = 'grid';
+    grid.innerHTML = productos.map(p => {
+      const color = p.dias_restantes <= 1 ? '#f56565' : p.dias_restantes <= 3 ? '#ed8936' : '#667eea';
+      const bgColor = p.dias_restantes <= 1 ? '#fff5f5' : p.dias_restantes <= 3 ? '#fffaf0' : '#f8faff';
+      const tiempoTexto = p.dias_restantes === 0
+        ? `⚠️ Menos de 1 día`
+        : p.dias_restantes === 1
+        ? `⚠️ 1 día restante`
+        : `${p.dias_restantes} días restantes`;
+
+      return `
+        <div style="background:${bgColor};border:2px solid ${color};border-radius:14px;padding:20px;position:relative">
+          <div style="position:absolute;top:12px;right:12px;background:${color};color:white;padding:4px 10px;border-radius:99px;font-size:12px;font-weight:700">
+            ${tiempoTexto}
+          </div>
+          <div style="font-size:16px;font-weight:700;color:#1a1f3a;margin-bottom:6px;margin-right:120px">${p.name}</div>
+          <div style="font-size:13px;color:#718096;margin-bottom:4px">🏪 ${p.store || '—'} • 📁 ${p.category || '—'}</div>
+          <div style="font-size:13px;color:#718096;margin-bottom:12px">📦 Condición: ${p.condition} ${p.size ? '• Talla: ' + p.size : ''}</div>
+          <div style="font-size:12px;color:#a0aec0">
+            Vendido: ${new Date(p.sold_at).toLocaleDateString('es-CR')}<br>
+            Imagen borrará: ${new Date(p.expira_en).toLocaleDateString('es-CR')}
+          </div>
+          <div style="margin-top:12px;background:${color}22;border-radius:99px;height:6px;overflow:hidden">
+            <div style="width:${Math.max(5, (p.dias_restantes/7)*100)}%;height:100%;background:${color};border-radius:99px;transition:width 1s"></div>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+  } catch(e) {
+    loading.textContent = '❌ Error cargando productos';
+    console.error(e);
+  }
 }
 
 async function loadAllData() {
