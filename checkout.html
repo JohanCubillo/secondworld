@@ -651,8 +651,7 @@
           if (response.ok) {
             const result = await response.json();
             localStorage.removeItem('cart');
-            alert('¡Pedido realizado con éxito! Revisa tu correo para más detalles.');
-            window.location.href = `order-confirmation.html?orderId=${result.id}`;
+            showModal('🎉', '¡Pedido realizado!', 'Revisa tu correo para más detalles. Te contactaremos pronto.', () => { window.location.href = `order-success.html?orderId=${result.id}`; });
           } else {
             throw new Error('Error al crear la orden en el servidor');
           }
@@ -660,12 +659,11 @@
           // Si falla el API pero se guardó en Google Sheets
           console.error('Error con el API:', apiError);
           localStorage.removeItem('cart');
-          alert('Tu pedido fue registrado exitosamente. Te contactaremos pronto.');
-          window.location.href = 'frontend.html';
+          showModal('✅', '¡Pedido registrado!', 'Tu pedido fue registrado exitosamente. Te contactaremos pronto.', () => { window.location.href = 'frontend.html'; });
         }
 
       } catch (error) {
-        alert('Error al procesar la orden: ' + error.message);
+        showModal('❌', 'Error al procesar', 'Error al procesar la orden: ' + error.message, null);
         console.error(error);
       } finally {
         submitBtn.disabled = false;
@@ -685,6 +683,35 @@
 
     // Init
     loadCart();
-  </script>
+  
+function showModal(icon, title, msg, callback) {
+  const modal = document.getElementById('order-modal');
+  document.getElementById('modal-icon').textContent = icon;
+  document.getElementById('modal-title').textContent = title;
+  document.getElementById('modal-msg').textContent = msg;
+  modal.style.display = 'flex';
+  document.getElementById('modal-btn').onclick = function() {
+    modal.style.display = 'none';
+    if (callback) callback();
+  };
+}
+</script>
+
+<!-- Modal de confirmación -->
+<div id="order-modal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);z-index:9999;align-items:center;justify-content:center">
+  <div style="background:white;border-radius:20px;padding:40px;max-width:420px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.3);animation:modalIn 0.3s ease">
+    <div id="modal-icon" style="font-size:60px;margin-bottom:16px">✅</div>
+    <h2 id="modal-title" style="font-size:22px;font-weight:700;color:#1a1f3a;margin-bottom:12px"></h2>
+    <p id="modal-msg" style="font-size:15px;color:#718096;line-height:1.6;margin-bottom:28px"></p>
+    <button id="modal-btn" style="background:linear-gradient(135deg,#667eea,#764ba2);color:white;border:none;padding:14px 40px;border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;width:100%">Aceptar</button>
+  </div>
+</div>
+<style>
+@keyframes modalIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+</style>
+
 </body>
 </html>

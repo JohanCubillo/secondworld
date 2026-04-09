@@ -3,634 +3,545 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rastrear Orden - SecondStyle</title>
+  <title>Rastrear Orden - Second World</title>
+  <link rel="stylesheet" href="css/frontend.css?v=3">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    :root {
-      --primary: #1a1a1a;
-      --secondary: #667eea;
-      --accent: #764ba2;
-      --text: #2d3748;
-      --text-light: #718096;
-      --bg: #ffffff;
-      --bg-gray: #f7fafc;
-      --border: #e2e8f0;
-      --success: #48bb78;
-      --warning: #ffc107;
-      --danger: #f56565;
-    }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(135deg, var(--secondary), var(--accent));
-      min-height: 100vh;
-      padding: 40px 20px;
-    }
-
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .header {
+    .track-hero {
+      padding: 120px 24px 60px;
       text-align: center;
       color: white;
-      margin-bottom: 40px;
     }
-
-    .header h1 {
-      font-size: 36px;
-      margin-bottom: 12px;
+    .track-hero h1 {
+      font-size: 48px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      text-shadow: 0 0 40px rgba(102,126,234,0.8);
     }
-
-    .header p {
+    .track-hero p {
       font-size: 18px;
-      opacity: 0.9;
+      color: rgba(255,255,255,0.7);
     }
-
+    .track-container {
+      max-width: 750px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
     .search-card {
       background: white;
-      border-radius: 16px;
+      border-radius: 24px;
       padding: 40px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.4);
       margin-bottom: 32px;
     }
-
-    .form-group {
+    .search-card h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: #1a1f3a;
       margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
-
+    .form-group { margin-bottom: 20px; }
     .form-label {
       display: block;
       font-weight: 600;
+      font-size: 13px;
+      color: #4a5568;
       margin-bottom: 8px;
-      color: var(--text);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
-
     .form-input {
       width: 100%;
       padding: 14px 16px;
-      border: 2px solid var(--border);
-      border-radius: 8px;
-      font-size: 16px;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      font-size: 15px;
+      color: #2d3748;
       transition: all 0.2s;
     }
-
     .form-input:focus {
       outline: none;
-      border-color: var(--secondary);
-      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102,126,234,0.15);
     }
-
-    .btn {
+    .search-btn {
       width: 100%;
       padding: 16px;
-      background: linear-gradient(135deg, var(--secondary), var(--accent));
+      background: linear-gradient(135deg, #667eea, #764ba2);
       color: white;
       border: none;
-      border-radius: 8px;
+      border-radius: 12px;
       font-weight: 700;
       font-size: 16px;
       cursor: pointer;
       transition: all 0.2s;
+      box-shadow: 0 6px 20px rgba(102,126,234,0.4);
     }
-
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    .search-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(102,126,234,0.5); }
+    .search-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .error-box {
+      display: none;
+      background: #fff5f5;
+      border: 1px solid #fed7d7;
+      border-radius: 12px;
+      padding: 14px 16px;
+      color: #c53030;
+      font-size: 14px;
+      margin-top: 16px;
     }
+    .error-box.show { display: block; }
 
-    .btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    .order-details {
+    /* Order Result Card */
+    .order-result {
       display: none;
       background: white;
-      border-radius: 16px;
-      padding: 40px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+      animation: slideUp 0.5s ease;
     }
-
-    .order-details.show {
-      display: block;
-      animation: slideUp 0.4s ease-out;
-    }
-
+    .order-result.show { display: block; }
     @keyframes slideUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
     }
 
-    .order-header {
+    /* Order Top Banner */
+    .order-banner {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      padding: 32px 40px;
+      color: white;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 32px;
-      padding-bottom: 24px;
-      border-bottom: 2px solid var(--border);
     }
-
-    .order-number {
+    .order-banner-left h2 {
       font-size: 28px;
-      font-weight: 700;
-      color: var(--primary);
+      font-weight: 800;
+      margin-bottom: 4px;
     }
-
-    .order-date {
-      color: var(--text-light);
-    }
-
-    .status-badge {
-      padding: 8px 20px;
-      border-radius: 20px;
+    .order-banner-left p { opacity: 0.85; font-size: 14px; }
+    .status-pill {
+      padding: 10px 22px;
+      border-radius: 99px;
       font-weight: 700;
       font-size: 14px;
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: white;
+    }
+
+    /* Timeline */
+    .timeline-section {
+      padding: 36px 40px;
+      border-bottom: 1px solid #f0f4f8;
+    }
+    .timeline-section h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #4a5568;
       text-transform: uppercase;
       letter-spacing: 0.5px;
+      margin-bottom: 28px;
     }
-
-    .status-pendiente {
-      background: #fff3cd;
-      color: #856404;
-    }
-
-    .status-pago_verificado {
-      background: #d1ecf1;
-      color: #0c5460;
-    }
-
-    .status-enviado {
-      background: #cce5ff;
-      color: #004085;
-    }
-
-    .status-entregado {
-      background: #d4edda;
-      color: #155724;
-    }
-
-    .status-cancelado {
-      background: #f8d7da;
-      color: #721c24;
-    }
-
     .timeline {
-      margin: 32px 0;
-    }
-
-    .timeline-item {
       display: flex;
-      gap: 20px;
-      margin-bottom: 24px;
+      justify-content: space-between;
       position: relative;
     }
-
-    .timeline-item:not(:last-child)::after {
+    .timeline::before {
       content: '';
       position: absolute;
-      left: 20px;
-      top: 50px;
-      width: 2px;
-      height: calc(100% - 20px);
-      background: var(--border);
+      top: 22px;
+      left: 10%;
+      right: 10%;
+      height: 3px;
+      background: #e2e8f0;
+      z-index: 0;
     }
-
-    .timeline-icon {
-      width: 40px;
-      height: 40px;
-      background: var(--bg-gray);
+    .timeline-progress {
+      position: absolute;
+      top: 22px;
+      left: 10%;
+      height: 3px;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+      z-index: 1;
+      transition: width 1s ease;
+    }
+    .tl-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      z-index: 2;
+      flex: 1;
+    }
+    .tl-icon {
+      width: 46px;
+      height: 46px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 20px;
-      flex-shrink: 0;
-      z-index: 1;
+      background: #e2e8f0;
+      transition: all 0.5s ease;
+      border: 3px solid white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
-
-    .timeline-icon.active {
-      background: var(--secondary);
-      color: white;
+    .tl-icon.done {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      animation: iconPop 0.4s ease;
     }
-
-    .timeline-content h4 {
-      margin-bottom: 4px;
-      color: var(--primary);
+    .tl-icon.current {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      animation: iconPulse 2s infinite;
     }
-
-    .timeline-content p {
-      color: var(--text-light);
-      font-size: 14px;
+    @keyframes iconPop {
+      0% { transform: scale(0.5); }
+      70% { transform: scale(1.2); }
+      100% { transform: scale(1); }
     }
-
-    .info-section {
-      background: var(--bg-gray);
-      border-radius: 12px;
-      padding: 24px;
-      margin-bottom: 24px;
+    @keyframes iconPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(102,126,234,0.4); }
+      50% { box-shadow: 0 0 0 10px rgba(102,126,234,0); }
     }
-
-    .info-section h3 {
-      margin-bottom: 16px;
-      color: var(--primary);
+    .tl-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #718096;
+      text-align: center;
     }
+    .tl-label.active { color: #667eea; }
 
+    /* Info sections */
+    .info-body { padding: 32px 40px; }
     .info-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 16px;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
     }
-
-    .info-item {
-      display: flex;
-      flex-direction: column;
+    .info-card {
+      background: #f8faff;
+      border-radius: 14px;
+      padding: 20px;
+      border: 1px solid #e8ecff;
     }
-
-    .info-label {
-      font-size: 13px;
-      color: var(--text-light);
-      margin-bottom: 4px;
+    .info-card h4 {
+      font-size: 12px;
+      font-weight: 700;
+      color: #a0aec0;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      font-weight: 600;
-    }
-
-    .info-value {
-      font-weight: 600;
-      color: var(--text);
-    }
-
-    .items-list {
-      margin: 24px 0;
-    }
-
-    .item {
-      display: flex;
-      gap: 16px;
-      padding: 16px;
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 8px;
       margin-bottom: 12px;
     }
-
-    .item img {
-      width: 80px;
-      height: 80px;
-      object-fit: cover;
-      border-radius: 8px;
-    }
-
-    .item-info {
-      flex: 1;
-    }
-
-    .item-name {
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-
-    .item-details {
-      font-size: 14px;
-      color: var(--text-light);
-    }
-
-    .item-price {
-      font-weight: 700;
-      color: var(--primary);
-      font-size: 18px;
-    }
-
-    .total-row {
+    .info-row {
       display: flex;
       justify-content: space-between;
-      padding: 16px 0;
-      border-top: 2px solid var(--border);
-      font-size: 20px;
+      align-items: center;
+      padding: 6px 0;
+      font-size: 14px;
+    }
+    .info-row span:first-child { color: #718096; }
+    .info-row span:last-child { font-weight: 600; color: #2d3748; }
+
+    /* Products */
+    .products-section {
+      background: #f8faff;
+      border-radius: 14px;
+      padding: 20px;
+      border: 1px solid #e8ecff;
+      margin-bottom: 20px;
+    }
+    .products-section h4 {
+      font-size: 12px;
       font-weight: 700;
-      margin-top: 16px;
+      color: #a0aec0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 16px;
     }
-
-    .error-message {
-      background: #f8d7da;
-      color: #721c24;
-      padding: 16px;
-      border-radius: 8px;
-      margin-top: 20px;
-      display: none;
+    .product-item {
+      display: flex;
+      gap: 14px;
+      padding: 12px 0;
+      border-bottom: 1px solid #edf2f7;
+      align-items: center;
     }
-
-    .error-message.show {
-      display: block;
+    .product-item:last-child { border-bottom: none; }
+    .product-item img {
+      width: 60px;
+      height: 60px;
+      border-radius: 10px;
+      object-fit: cover;
     }
+    .product-item-info { flex: 1; }
+    .product-item-name { font-weight: 600; font-size: 14px; color: #2d3748; margin-bottom: 3px; }
+    .product-item-detail { font-size: 12px; color: #718096; }
+    .product-item-price { font-weight: 700; color: #667eea; font-size: 16px; }
 
-    .back-link {
-      display: inline-block;
-      margin-top: 24px;
+    .total-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      border-radius: 12px;
       color: white;
+    }
+    .total-bar span:first-child { font-size: 15px; opacity: 0.9; }
+    .total-bar span:last-child { font-size: 22px; font-weight: 800; }
+
+    .back-section {
+      padding: 24px 40px;
+      border-top: 1px solid #f0f4f8;
+      text-align: center;
+    }
+    .back-btn {
+      display: inline-block;
+      padding: 12px 28px;
+      border-radius: 10px;
+      background: #f7fafc;
+      color: #4a5568;
       text-decoration: none;
       font-weight: 600;
+      font-size: 14px;
+      border: 1px solid #e2e8f0;
+      transition: all 0.2s;
     }
-
-    .back-link:hover {
-      text-decoration: underline;
-    }
+    .back-btn:hover { background: #edf2f7; transform: translateY(-1px); }
 
     @media (max-width: 768px) {
-      .order-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 16px;
-      }
-
-      .info-grid {
-        grid-template-columns: 1fr;
-      }
+      .order-banner { flex-direction: column; gap: 16px; text-align: center; }
+      .info-grid { grid-template-columns: 1fr; }
+      .timeline-section, .info-body, .back-section { padding: 24px 20px; }
+      .order-banner { padding: 24px 20px; }
+      .track-hero h1 { font-size: 32px; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <h1>🔍 Rastrear mi Orden</h1>
-      <p>Ingresa tu información para ver el estado de tu pedido</p>
-    </div>
+  <!-- Space Background -->
+  <div class="space-background"><div class="stars"></div></div>
 
-    <!-- Formulario de búsqueda -->
+  <!-- Header -->
+  <header class="header">
+    <div class="header-container">
+      <div class="logo-section">
+        <img src="assets/images/logo.png" alt="Second World" class="logo" style="height: 45px;">
+        <span class="brand-name">Second World</span>
+      </div>
+      <nav class="nav-menu">
+        <a href="index.html" class="nav-link">Inicio</a>
+        <a href="index.html#stores" class="nav-link">Tiendas</a>
+        <a href="index.html#productos" class="nav-link">Productos</a>
+        <a href="order-confirmation.html" class="nav-link active">Rastrear Orden</a>
+        <a href="#" class="nav-link">Contacto</a>
+      </nav>
+      <div style="display:flex;gap:16px;align-items:center;">
+        <button class="cart-button" onclick="window.location.href='index.html'">
+          🛒 Tienda
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <div class="track-hero">
+    <h1>🔍 Rastrear mi Orden</h1>
+    <p>Ingresa tu email y número de orden para ver el estado en tiempo real</p>
+  </div>
+
+  <div class="track-container">
+    <!-- Search Form -->
     <div class="search-card">
+      <h2>📦 Buscar mi pedido</h2>
       <form id="track-form">
         <div class="form-group">
-          <label class="form-label">📧 Email</label>
-          <input 
-            type="email" 
-            class="form-input" 
-            id="search-email" 
-            placeholder="tu@email.com" 
-            required
-          >
+          <label class="form-label">📧 Email de tu pedido</label>
+          <input type="email" class="form-input" id="search-email" placeholder="tu@email.com" required>
         </div>
-
         <div class="form-group">
           <label class="form-label">🔢 Número de Orden</label>
-          <input 
-            type="text" 
-            class="form-input" 
-            id="search-order-id" 
-            placeholder="123" 
-            required
-          >
+          <input type="text" class="form-input" id="search-order-id" placeholder="ej: 42" required>
         </div>
-
-        <button type="submit" class="btn" id="search-btn">
-          Buscar Orden
+        <button type="submit" class="search-btn" id="search-btn">
+          🔍 Buscar Orden
         </button>
-
-        <div class="error-message" id="error-message"></div>
+        <div class="error-box" id="error-box">
+          ❌ No encontramos ninguna orden con esa información. Verifica tu email y número de orden.
+        </div>
       </form>
     </div>
 
-    <!-- Detalles de la orden -->
-    <div class="order-details" id="order-details">
-      <div class="order-header">
-        <div>
-          <div class="order-number" id="order-number">#---</div>
-          <div class="order-date" id="order-date">---</div>
+    <!-- Order Result -->
+    <div class="order-result" id="order-result">
+      <!-- Banner -->
+      <div class="order-banner">
+        <div class="order-banner-left">
+          <h2 id="res-order-num">#---</h2>
+          <p id="res-order-date">---</p>
         </div>
-        <div>
-          <span class="status-badge" id="status-badge">---</span>
-        </div>
+        <div class="status-pill" id="res-status">---</div>
       </div>
 
-      <!-- Timeline de estado -->
-      <div class="timeline" id="timeline">
-        <div class="timeline-item">
-          <div class="timeline-icon active">📝</div>
-          <div class="timeline-content">
-            <h4>Orden Recibida</h4>
-            <p>Tu orden ha sido registrada exitosamente</p>
+      <!-- Timeline -->
+      <div class="timeline-section">
+        <h3>📍 Estado del pedido</h3>
+        <div class="timeline" id="timeline">
+          <div class="timeline-progress" id="tl-progress" style="width:0%"></div>
+          <div class="tl-step">
+            <div class="tl-icon" id="tl-0">📝</div>
+            <span class="tl-label" id="tl-label-0">Recibido</span>
           </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-icon" id="icon-verified">💳</div>
-          <div class="timeline-content">
-            <h4>Pago Verificado</h4>
-            <p>Estamos verificando tu pago SINPE</p>
+          <div class="tl-step">
+            <div class="tl-icon" id="tl-1">💳</div>
+            <span class="tl-label" id="tl-label-1">Pago verificado</span>
           </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-icon" id="icon-shipped">📦</div>
-          <div class="timeline-content">
-            <h4>En Camino</h4>
-            <p>Tu pedido ha sido enviado</p>
+          <div class="tl-step">
+            <div class="tl-icon" id="tl-2">📦</div>
+            <span class="tl-label" id="tl-label-2">Preparando</span>
           </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-icon" id="icon-delivered">🎉</div>
-          <div class="timeline-content">
-            <h4>Entregado</h4>
-            <p>Tu pedido ha sido entregado</p>
+          <div class="tl-step">
+            <div class="tl-icon" id="tl-3">🚚</div>
+            <span class="tl-label" id="tl-label-3">En camino</span>
+          </div>
+          <div class="tl-step">
+            <div class="tl-icon" id="tl-4">🎉</div>
+            <span class="tl-label" id="tl-label-4">Entregado</span>
           </div>
         </div>
       </div>
 
-      <!-- Información del cliente -->
-      <div class="info-section">
-        <h3>👤 Información del Cliente</h3>
+      <!-- Info -->
+      <div class="info-body">
         <div class="info-grid">
-          <div class="info-item">
-            <span class="info-label">Nombre</span>
-            <span class="info-value" id="customer-name">---</span>
+          <div class="info-card">
+            <h4>👤 Cliente</h4>
+            <div class="info-row"><span>Nombre</span><span id="res-name">---</span></div>
+            <div class="info-row"><span>Email</span><span id="res-email">---</span></div>
+            <div class="info-row"><span>Teléfono</span><span id="res-phone">---</span></div>
           </div>
-          <div class="info-item">
-            <span class="info-label">Email</span>
-            <span class="info-value" id="customer-email">---</span>
+          <div class="info-card">
+            <h4>📮 Envío</h4>
+            <div class="info-row"><span>Dirección</span><span id="res-address">---</span></div>
+            <div class="info-row"><span>Provincia</span><span id="res-province">---</span></div>
+            <div class="info-row"><span>Tiempo est.</span><span>3-5 días hábiles</span></div>
           </div>
-          <div class="info-item">
-            <span class="info-label">Teléfono</span>
-            <span class="info-value" id="customer-phone">---</span>
-          </div>
+        </div>
+
+        <!-- Products -->
+        <div class="products-section">
+          <h4>🛍️ Productos</h4>
+          <div id="res-items"></div>
+        </div>
+
+        <div class="total-bar">
+          <span>Total del pedido</span>
+          <span id="res-total">₡0.00</span>
         </div>
       </div>
 
-      <!-- Información de envío -->
-      <div class="info-section">
-        <h3>📦 Información de Envío</h3>
-        <div class="info-grid">
-          <div class="info-item">
-            <span class="info-label">Dirección</span>
-            <span class="info-value" id="shipping-address">---</span>
-          </div>
-          <div class="info-item">
-            <span class="info-label">Provincia</span>
-            <span class="info-value" id="shipping-province">---</span>
-          </div>
-        </div>
+      <div class="back-section">
+        <a href="index.html" class="back-btn">← Volver a la Tienda</a>
       </div>
-
-      <!-- Productos -->
-      <div class="info-section">
-        <h3>🛍️ Productos</h3>
-        <div id="items-container" class="items-list"></div>
-        <div class="total-row">
-          <span>Total:</span>
-          <span id="order-total">₡0.00</span>
-        </div>
-      </div>
-
-      <a href="frontend.html" class="back-link" style="color: var(--secondary);">← Volver a la Tienda</a>
     </div>
-
-    <a href="frontend.html" class="back-link">← Volver a la Tienda</a>
   </div>
 
   <script>
-    const API_URL = 'http://localhost:3001/api/v1';
+    const TRACK_API_URL = window.location.hostname === 'localhost'
+      ? 'http://localhost:3000/api/v1'
+      : 'https://secondworld.store/api/v1';
+
+    const statusMap = {
+      pendiente:       { label: '⏳ Pendiente',       step: 0 },
+      pago_verificado: { label: '✅ Pago Verificado',  step: 1 },
+      preparando:      { label: '📦 Preparando',       step: 2 },
+      enviado:         { label: '🚚 En Camino',         step: 3 },
+      entregado:       { label: '🎉 Entregado',         step: 4 },
+      cancelado:       { label: '❌ Cancelado',         step: -1 },
+    };
 
     document.getElementById('track-form').addEventListener('submit', async (e) => {
       e.preventDefault();
-      
       const email = document.getElementById('search-email').value;
       const orderId = document.getElementById('search-order-id').value;
-      const searchBtn = document.getElementById('search-btn');
-      const errorMsg = document.getElementById('error-message');
-
-      searchBtn.disabled = true;
-      searchBtn.textContent = 'Buscando...';
-      errorMsg.classList.remove('show');
-
+      const btn = document.getElementById('search-btn');
+      const errorBox = document.getElementById('error-box');
+      btn.disabled = true;
+      btn.textContent = '⏳ Buscando...';
+      errorBox.classList.remove('show');
       try {
-        const response = await fetch(`${API_URL}/orders/track?email=${encodeURIComponent(email)}&orderId=${orderId}`);
-        
-        if (!response.ok) {
-          throw new Error('Orden no encontrada');
-        }
-
-        const order = await response.json();
-        displayOrderDetails(order);
-
-      } catch (error) {
-        errorMsg.textContent = '❌ No se encontró ninguna orden con esa información. Verifica tu email y número de orden.';
-        errorMsg.classList.add('show');
-        console.error(error);
+        const res = await fetch(`${TRACK_API_URL}/orders/track?email=${encodeURIComponent(email)}&orderId=${orderId}`);
+        if (!res.ok) throw new Error('No encontrada');
+        const order = await res.json();
+        renderOrder(order);
+      } catch(err) {
+        errorBox.classList.add('show');
       } finally {
-        searchBtn.disabled = false;
-        searchBtn.textContent = 'Buscar Orden';
+        btn.disabled = false;
+        btn.textContent = '🔍 Buscar Orden';
       }
     });
 
-    function displayOrderDetails(order) {
-      document.getElementById('order-details').classList.add('show');
+    function renderOrder(order) {
+      document.getElementById('res-order-num').textContent = '#' + order.id;
+      document.getElementById('res-order-date').textContent = new Date(order.createdAt).toLocaleDateString('es-CR', { year:'numeric', month:'long', day:'numeric' });
+      
+      const status = statusMap[order.status] || { label: order.status, step: 0 };
+      document.getElementById('res-status').textContent = status.label;
 
-      // Header
-      document.getElementById('order-number').textContent = `#${order.id}`;
-      document.getElementById('order-date').textContent = new Date(order.createdAt).toLocaleDateString('es-CR', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-      });
+      // Animar timeline
+      const steps = 4;
+      const pct = status.step < 0 ? 0 : (status.step / steps) * 80;
+      setTimeout(() => {
+        document.getElementById('tl-progress').style.width = pct + '%';
+      }, 300);
 
-      // Status
-      const statusLabels = {
-        'pendiente': '⏳ Pendiente',
-        'pago_verificado': '✅ Pago Verificado',
-        'enviado': '📦 Enviado',
-        'entregado': '🎉 Entregado',
-        'cancelado': '❌ Cancelado'
-      };
+      for (let i = 0; i <= steps; i++) {
+        const icon = document.getElementById('tl-' + i);
+        const label = document.getElementById('tl-label-' + i);
+        if (status.step < 0) break;
+        if (i < status.step) { icon.classList.add('done'); label.classList.add('active'); }
+        else if (i === status.step) { icon.classList.add('current'); label.classList.add('active'); }
+      }
 
-      const statusBadge = document.getElementById('status-badge');
-      statusBadge.textContent = statusLabels[order.status];
-      statusBadge.className = `status-badge status-${order.status}`;
+      document.getElementById('res-name').textContent = order.customerName || '---';
+      document.getElementById('res-email').textContent = order.customerEmail || '---';
+      document.getElementById('res-phone').textContent = order.customerPhone || '---';
+      document.getElementById('res-address').textContent = order.shippingAddress || '---';
+      document.getElementById('res-province').textContent = [order.shippingProvince, order.shippingCanton, order.shippingDistrict].filter(Boolean).join(', ') || '---';
 
-      // Timeline
-      updateTimeline(order.status);
-
-      // Customer info
-      document.getElementById('customer-name').textContent = order.customerName;
-      document.getElementById('customer-email').textContent = order.customerEmail;
-      document.getElementById('customer-phone').textContent = order.customerPhone;
-
-      // Shipping info
-      document.getElementById('shipping-address').textContent = order.shippingAddress;
-      document.getElementById('shipping-province').textContent = `${order.shippingProvince}, ${order.shippingCanton}, ${order.shippingDistrict}`;
-
-      // Items
-      const itemsContainer = document.getElementById('items-container');
-      itemsContainer.innerHTML = order.items.map(item => `
-        <div class="item">
-          <img src="${item.productImage}" alt="${item.productName}">
-          <div class="item-info">
-            <div class="item-name">${item.productName}</div>
-            <div class="item-details">Cantidad: ${item.quantity} × ₡${parseFloat(item.price).toFixed(2)}</div>
+      const itemsHtml = (order.items || []).map(item => `
+        <div class="product-item">
+          <img src="${item.productImage || 'assets/images/placeholder.png'}" alt="${item.productName}">
+          <div class="product-item-info">
+            <div class="product-item-name">${item.productName}</div>
+            <div class="product-item-detail">Cantidad: ${item.quantity}</div>
           </div>
-          <div class="item-price">₡${(item.quantity * parseFloat(item.price)).toFixed(2)}</div>
+          <div class="product-item-price">₡${(item.quantity * parseFloat(item.price)).toFixed(2)}</div>
         </div>
       `).join('');
+      document.getElementById('res-items').innerHTML = itemsHtml;
+      document.getElementById('res-total').textContent = '₡' + parseFloat(order.total).toFixed(2);
 
-      // Total
-      document.getElementById('order-total').textContent = `₡${parseFloat(order.total).toFixed(2)}`;
-
-      // Scroll to details
-      document.getElementById('order-details').scrollIntoView({ behavior: 'smooth' });
-}
-
-function updateTimeline(status) {
-  // Definir el orden de estados
-  const statusOrder = ['pendiente', 'pago_verificado', 'enviado', 'entregado'];
-  const currentIndex = statusOrder.indexOf(status);
-  
-  // Referencias a los items del timeline
-  const timelineItems = document.querySelectorAll('.timeline-item');
-  const icons = [
-    null, // El primer icono (📝) siempre está activo
-    document.getElementById('icon-verified'),
-    document.getElementById('icon-shipped'),
-    document.getElementById('icon-delivered')
-  ];
-  
-  // Si está cancelado, ocultar todos menos el primero
-  if (status === 'cancelado') {
-    timelineItems.forEach((item, index) => {
-      if (index > 0) {
-        item.style.display = 'none';
-      }
-    });
-    return;
-  }
-  
-  // Mostrar/ocultar items según el estado actual
-  timelineItems.forEach((item, index) => {
-    if (index <= currentIndex) {
-      // Mostrar y activar pasos completados
-      item.style.display = 'flex';
-      if (icons[index]) {
-        icons[index].classList.add('active');
-      }
-    } else {
-      // Ocultar pasos futuros
-      item.style.display = 'none';
+      const result = document.getElementById('order-result');
+      result.classList.add('show');
+      result.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-  });
-}
+
+    // Estrellas animadas
+    const starsEl = document.querySelector('.stars');
+    for (let i = 0; i < 120; i++) {
+      const s = document.createElement('div');
+      s.className = 'star';
+      s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;width:${Math.random()*2+1}px;height:${Math.random()*2+1}px;animation-delay:${Math.random()*3}s;animation-duration:${2+Math.random()*3}s`;
+      starsEl.appendChild(s);
+    }
   </script>
 </body>
 </html>
