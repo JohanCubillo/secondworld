@@ -172,7 +172,7 @@ router.post('/:id/images', async (req, res, next) => {
     const { image, orden } = req.body;
     if (!image) return res.status(400).json({ error: 'Imagen requerida' });
     const img = await models.ProductImage.create({
-      product_id: req.params.id,
+      productId: req.params.id,
       image,
       orden: orden || 0
     });
