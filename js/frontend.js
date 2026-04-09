@@ -25,6 +25,7 @@ async function loadStores() {
     const filterStore = document.getElementById('filter-store');
     const miniStoresGrid = document.getElementById('mini-stores-grid');
 
+    if (!miniStoresGrid) return;
     miniStoresGrid.innerHTML = allStores.map(store => {
       const productCount = store.products ? store.products.length : 0;
       
@@ -189,8 +190,8 @@ function displayProducts(products) {
     }
 
     return `
-      <div class="product-card">
-        <div class="product-image-container" onclick="window.location.href='producto.html?id=${p.id}'" style="cursor:pointer">
+      <div class="product-card" onclick="window.location.href='producto.html?id=${p.id}'" style="cursor:pointer">
+        <div class="product-image-container">
           <img src="${p.image}" alt="${p.name}" class="product-image" onerror="this.src='https://via.placeholder.com/300'">
           <div class="product-badges">
             ${p.isFlashSale ? '<span class="badge badge-flash">🔥 REMATE</span>' : ''}
