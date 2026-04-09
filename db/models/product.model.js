@@ -19,7 +19,7 @@ const ProductSchema = {
   },
   image: {
     type: DataTypes.TEXT,
-    allowNull: false,
+    allowNull: true,
   },
   description: {
     type: DataTypes.TEXT,
@@ -74,6 +74,19 @@ const ProductSchema = {
     },
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL',
+  },
+  soldAt: {
+    type: DataTypes.DATE,
+    allowNull: true,
+    field: 'sold_at',
+    comment: 'Fecha en que el stock llegó a 0',
+  },
+  imageDeleted: {
+    type: DataTypes.BOOLEAN,
+    allowNull: true,
+    defaultValue: false,
+    field: 'image_deleted',
+    comment: 'Indica si la imagen fue borrada por expiración',
   },
   createdAt: {
     type: DataTypes.DATE,
