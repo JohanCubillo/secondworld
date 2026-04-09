@@ -190,7 +190,7 @@ function displayProducts(products) {
 
     return `
       <div class="product-card">
-        <div class="product-image-container">
+        <div class="product-image-container" onclick="window.location.href='producto.html?id=${p.id}'" style="cursor:pointer">
           <img src="${p.image}" alt="${p.name}" class="product-image" onerror="this.src='https://via.placeholder.com/300'">
           <div class="product-badges">
             ${p.isFlashSale ? '<span class="badge badge-flash">🔥 REMATE</span>' : ''}
@@ -201,7 +201,7 @@ function displayProducts(products) {
         </div>
         <div class="product-info">
           <div class="product-category">${p.category ? p.category.name : 'Sin categoría'}</div>
-          <h3 class="product-name">${p.name}</h3>
+          <h3 class="product-name" onclick="window.location.href='producto.html?id=${p.id}'" style="cursor:pointer">${p.name}</h3>
           <p class="product-description">${p.description || ''}</p>
           <div class="product-meta">
             ${p.size ? `<span>📏 Talla ${p.size}</span>` : ''}

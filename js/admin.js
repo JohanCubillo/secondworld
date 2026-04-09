@@ -728,9 +728,13 @@ async function editProduct(id) {
     document.getElementById('product-image').value = '';
     document.getElementById('product-image').removeAttribute('required');
     
-    document.getElementById('product-form-title').textContent = '✏️ Editar Producto (mantiene imagen actual si no seleccionas una nueva)';
+    document.getElementById('product-form-title').textContent = '✏️ Editar Producto';
     document.getElementById('product-submit-btn').textContent = 'Actualizar Producto';
     document.getElementById('product-cancel-btn').classList.remove('hidden');
+
+    // Mostrar sección de imágenes extra
+    document.getElementById('extra-images-section').style.display = 'block';
+    cargarImagenesExtra(product.id);
     
     window.scrollTo({ top: 0, behavior: 'smooth' });
   } catch (error) {
@@ -745,8 +749,9 @@ function cancelProductEdit() {
   document.getElementById('product-form-title').textContent = '➕ Agregar Nuevo Producto';
   document.getElementById('product-submit-btn').textContent = 'Agregar Producto';
   document.getElementById('product-cancel-btn').classList.add('hidden');
-  // Restaurar el required en la imagen
   document.getElementById('product-image').setAttribute('required', 'required');
+  document.getElementById('extra-images-section').style.display = 'none';
+  productoEditandoId = null;
 }
 
 async function deleteProduct(id) {
@@ -1013,4 +1018,72 @@ async function eliminarMensaje(id) {
   if (!confirm('¿Eliminar este mensaje?')) return;
   await fetch(`${API_URL}/contacto/${id}`, { method: 'DELETE' });
   document.getElementById('msg-' + id).remove();
+}
+
+// ── IMÁGENES ADICIONALES ──
+let productoEditandoId = null;
+
+async function cargarImagenesExtra(productId) {
+  productoEditandoId = productId;
+  const grid = document.getElementById('extra-images-grid');
+  grid.innerHTML = '<span style="color:#718096;font-size:13px">Cargando...</span>';
+
+  try {
+    const res = await fetch(`${API_URL}/products/${productId}/images`);
+    const images = await res.json();
+    
+    if (!images.length) {
+      grid.innerHTML = '<span style="color:#a0aec0;font-size:13px">Sin imágenes adicionales</span>';
+      return;
+    }
+
+    grid.innerHTML = images.map(img => `
+      <div style="position:relative;border-radius:8px;overflow:hidden;border:1px solid #e2e8f0">
+        <img src="${img.image}" style="width:100%;height:90px;object-fit:cover;display:block">
+        <button onclick="eliminarImagenExtra(${img.id})" 
+          style="position:absolute;top:4px;right:4px;background:rgba(0,0,0,0.6);color:white;border:none;border-radius:50%;width:22px;height:22px;cursor:pointer;font-size:12px;line-height:1">×</button>
+      </div>
+    `).join('');
+  } catch(e) {
+    grid.innerHTML = '<span style="color:#e53e3e;font-size:13px">Error cargando imágenes</span>';
+  }
+}
+
+async function subirImagenExtra() {
+  if (!productoEditandoId) return;
+  const input = document.getElementById('extra-image-input');
+  if (!input.files[0]) return alert('Seleccioná una imagen primero');
+
+  const file = input.files[0];
+  if (file.size > 5 * 1024 * 1024) return alert('La imagen no puede superar 5MB');
+
+  const reader = new FileReader();
+  reader.onload = async (e) => {
+    try {
+      const res = await fetch(`${API_URL}/products/${productoEditandoId}/images`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ image: e.target.result })
+      });
+      if (res.ok) {
+        input.value = '';
+        cargarImagenesExtra(productoEditandoId);
+      } else {
+        alert('Error al subir imagen');
+      }
+    } catch(err) {
+      alert('Error de conexión');
+    }
+  };
+  reader.readAsDataURL(file);
+}
+
+async function eliminarImagenExtra(imageId) {
+  if (!confirm('¿Eliminar esta imagen?')) return;
+  try {
+    await fetch(`${API_URL}/products/${productoEditandoId}/images/${imageId}`, { method: 'DELETE' });
+    cargarImagenesExtra(productoEditandoId);
+  } catch(e) {
+    alert('Error al eliminar imagen');
+  }
 }

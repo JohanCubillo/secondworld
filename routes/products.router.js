@@ -152,4 +152,43 @@ router.delete('/:id',
   }
 );
 
+
+// Obtener imágenes adicionales de un producto
+router.get('/:id/images', async (req, res, next) => {
+  try {
+    const { models } = require('../libs/sequelize');
+    const images = await models.ProductImage.findAll({
+      where: { product_id: req.params.id },
+      order: [['orden', 'ASC']]
+    });
+    res.json(images);
+  } catch(e) { next(e); }
+});
+
+// Agregar imagen adicional
+router.post('/:id/images', async (req, res, next) => {
+  try {
+    const { models } = require('../libs/sequelize');
+    const { image, orden } = req.body;
+    if (!image) return res.status(400).json({ error: 'Imagen requerida' });
+    const img = await models.ProductImage.create({
+      product_id: req.params.id,
+      image,
+      orden: orden || 0
+    });
+    res.status(201).json(img);
+  } catch(e) { next(e); }
+});
+
+// Eliminar imagen adicional
+router.delete('/:id/images/:imageId', async (req, res, next) => {
+  try {
+    const { models } = require('../libs/sequelize');
+    await models.ProductImage.destroy({
+      where: { id: req.params.imageId, product_id: req.params.id }
+    });
+    res.json({ success: true });
+  } catch(e) { next(e); }
+});
+
 module.exports = router;

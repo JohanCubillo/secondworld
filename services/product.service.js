@@ -25,7 +25,7 @@ class ProductsService {
   }
   async findOne(id) {
     const product = await models.Product.findByPk(id, {
-      include: ['store', 'category']
+      include: ['store', 'category', 'images']
     });
     if (!product) {
       throw boom.notFound('Product not found');

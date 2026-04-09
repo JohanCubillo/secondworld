@@ -98,10 +98,9 @@ const ProductSchema = {
 
 class Product extends Model {
   static associate(models) {
-    // Un producto pertenece a una tienda
     this.belongsTo(models.Store, { as: 'store' });
-    // Un producto pertenece a una categoría
     this.belongsTo(models.Category, { as: 'category' });
+    this.hasMany(models.ProductImage, { as: 'images', foreignKey: 'product_id' });
   }
 
   static config(sequelize) {
