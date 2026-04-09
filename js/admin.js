@@ -1050,32 +1050,43 @@ async function cargarImagenesExtra(productId) {
 }
 
 async function subirImagenExtra() {
-  if (!productoEditandoId) return;
+  if (!productoEditandoId) { alert('Primero editá un producto'); return; }
   const input = document.getElementById('extra-image-input');
-  if (!input.files[0]) return alert('Seleccioná una imagen primero');
+  if (!input.files.length) return alert('Seleccioná al menos una imagen');
 
-  const file = input.files[0];
-  if (file.size > 5 * 1024 * 1024) return alert('La imagen no puede superar 5MB');
+  const archivos = Array.from(input.files);
+  let subidos = 0;
 
-  const reader = new FileReader();
-  reader.onload = async (e) => {
-    try {
-      const res = await fetch(`${API_URL}/products/${productoEditandoId}/images`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ image: e.target.result })
-      });
-      if (res.ok) {
-        input.value = '';
-        cargarImagenesExtra(productoEditandoId);
-      } else {
-        alert('Error al subir imagen');
-      }
-    } catch(err) {
-      alert('Error de conexión');
-    }
-  };
-  reader.readAsDataURL(file);
+  for (const file of archivos) {
+    if (file.size > 5 * 1024 * 1024) { alert(file.name + ' supera 5MB, se omitirá'); continue; }
+    await new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        try {
+          const res = await fetch(API_URL + '/products/' + productoEditandoId + '/images', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ image: e.target.result })
+          });
+          if (res.ok) subidos++;
+          else alert('Error subiendo ' + file.name);
+        } catch(err) { alert('Error de conexión'); }
+        resolve();
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  const parent = input.parentNode;
+  const newInput = document.createElement('input');
+  newInput.type = 'file';
+  newInput.id = 'extra-image-input';
+  newInput.accept = 'image/*';
+  newInput.multiple = true;
+  newInput.style.flex = '1';
+  parent.replaceChild(newInput, input);
+
+  if (subidos > 0) cargarImagenesExtra(productoEditandoId);
 }
 
 async function eliminarImagenExtra(imageId) {
