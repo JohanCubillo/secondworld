@@ -754,7 +754,7 @@ async function editProduct(id) {
     
     window.scrollTo({ top: 0, behavior: 'smooth' });
   } catch (error) {
-    alert('Error al cargar producto');
+    alert('Error al cargar producto: ' + error.message);
     console.error(error);
   }
 }
