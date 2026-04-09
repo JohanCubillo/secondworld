@@ -650,13 +650,12 @@ document.getElementById('product-form').addEventListener('submit', async (e) => 
   e.preventDefault();
   
   const productId = document.getElementById('product-id').value;
-  const imageFile = document.getElementById('product-image').files[0];
+  const imageFiles = document.getElementById('product-image').files;
   
   let imageData = '';
-  if (imageFile) {
-    imageData = await fileToBase64(imageFile);
+  if (imageFiles.length > 0) {
+    imageData = await fileToBase64(imageFiles[0]);
   } else if (productId) {
-    // Si estamos editando y no hay nueva imagen, mantener la anterior
     const product = products.find(p => p.id == productId);
     imageData = product ? product.image : '';
   }
@@ -697,7 +696,25 @@ document.getElementById('product-form').addEventListener('submit', async (e) => 
       return;
     }
 
+    const savedProduct = await response.json();
+    const savedId = savedProduct.id || productId;
+
+    // Subir imágenes adicionales (desde la 2da en adelante)
+    if (imageFiles.length > 1 && savedId) {
+      for (let i = 1; i < imageFiles.length; i++) {
+        const file = imageFiles[i];
+        if (file.size > 5 * 1024 * 1024) continue;
+        const base64 = await fileToBase64(file);
+        await fetch(API_URL + '/products/' + savedId + '/images', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ image: base64, orden: i })
+        });
+      }
+    }
+
     showSuccess(productId ? 'Producto actualizado exitosamente' : 'Producto agregado exitosamente');
+    document.getElementById('preview-imagenes').innerHTML = '';
     document.getElementById('product-form').reset();
     cancelProductEdit();
     loadProducts();
@@ -1098,3 +1115,26 @@ async function eliminarImagenExtra(imageId) {
     alert('Error al eliminar imagen');
   }
 }
+
+// Preview de imágenes seleccionadas
+document.addEventListener('DOMContentLoaded', () => {
+  const imgInput = document.getElementById('product-image');
+  if (imgInput) {
+    imgInput.addEventListener('change', function() {
+      const preview = document.getElementById('preview-imagenes');
+      if (!preview) return;
+      preview.innerHTML = '';
+      Array.from(this.files).forEach((file, i) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const div = document.createElement('div');
+          div.style.cssText = 'position:relative;width:80px;height:80px;border-radius:8px;overflow:hidden;border:2px solid ' + (i===0 ? '#667eea' : '#e2e8f0');
+          div.innerHTML = '<img src="' + e.target.result + '" style="width:100%;height:100%;object-fit:cover">' +
+            (i===0 ? '<div style="position:absolute;bottom:0;left:0;right:0;background:rgba(102,126,234,0.8);color:white;font-size:9px;text-align:center;padding:2px;font-weight:700">PRINCIPAL</div>' : '');
+          preview.appendChild(div);
+        };
+        reader.readAsDataURL(file);
+      });
+    });
+  }
+});

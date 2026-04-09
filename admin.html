@@ -117,8 +117,9 @@
           <div class="form-row full">
             <div class="form-group">
               <label>Imagen del Producto *</label>
-              <input type="file" id="product-image" accept="image/*" required>
-              <small style="color: #999; display: block; margin-top: 5px;">Formatos: JPG, PNG, WebP (Máx. 5MB)</small>
+              <input type="file" id="product-image" accept="image/*" multiple required>
+              <small style="color: #999; display: block; margin-top: 5px;">Primera imagen = principal. Podés seleccionar varias a la vez. Formatos: JPG, PNG, WebP (Máx. 5MB c/u)</small>
+              <div id="preview-imagenes" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"></div>
             </div>
           </div>
 
@@ -136,18 +137,7 @@
             </div>
           </div>
 
-          <!-- Imágenes adicionales (solo al editar) -->
-          <div id="extra-images-section" style="display:none;margin-bottom:20px">
-            <div class="form-group">
-              <label>📸 Imágenes adicionales</label>
-              <div id="extra-images-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:10px;margin-bottom:12px"></div>
-              <div style="display:flex;gap:10px;align-items:center">
-                <input type="file" id="extra-image-input" accept="image/*" multiple style="flex:1">
-                <button type="button" onclick="subirImagenExtra()" class="btn btn-primary" style="white-space:nowrap">+ Agregar</button>
-              </div>
-              <small style="color:#999;margin-top:4px;display:block">Podés agregar hasta 5 imágenes adicionales</small>
-            </div>
-          </div>
+
 
           <div class="action-buttons">
             <button type="submit" class="btn btn-success" id="product-submit-btn">Agregar Producto</button>
