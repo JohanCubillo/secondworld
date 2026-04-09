@@ -19,14 +19,13 @@
     }
     .contacto-hero p { font-size: 18px; color: rgba(255,255,255,0.7); }
     .contacto-container {
-      max-width: 900px;
+      max-width: 600px;
       margin: 0 auto;
       padding: 0 24px 80px;
-      display: grid;
-      grid-template-columns: 1fr 1.5fr;
-      gap: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
     }
-    @media(max-width:768px) { .contacto-container { grid-template-columns: 1fr; } }
     .info-card {
       background: white;
       border-radius: 20px;
@@ -80,7 +79,7 @@
     }
     .form-card h2 { font-size: 20px; font-weight: 700; color: #1a1f3a; margin-bottom: 24px; }
     .form-group { margin-bottom: 16px; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-row { display: grid; grid-template-columns: 1fr; gap: 0; }
     .form-label { display: block; font-size: 12px; font-weight: 700; color: #4a5568; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
     .form-input {
       width: 100%;
@@ -164,32 +163,22 @@
     <!-- Info -->
     <div class="info-card">
       <h2>📍 Información</h2>
-      <div class="info-item">
-        <div class="info-icon">📱</div>
-        <div class="info-text">
-          <h4>WhatsApp</h4>
-          <a href="https://wa.me/50670259400" target="_blank">+506 7025-9400</a>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div class="info-item" style="border:none;padding:10px 0">
+          <div class="info-icon">📱</div>
+          <div class="info-text"><h4>WhatsApp</h4><a href="https://wa.me/50670259400" target="_blank">+506 7025-9400</a></div>
         </div>
-      </div>
-      <div class="info-item">
-        <div class="info-icon">🌍</div>
-        <div class="info-text">
-          <h4>Ubicación</h4>
-          <p>Costa Rica 🇨🇷</p>
+        <div class="info-item" style="border:none;padding:10px 0">
+          <div class="info-icon">🌍</div>
+          <div class="info-text"><h4>Ubicación</h4><p>Costa Rica 🇨🇷</p></div>
         </div>
-      </div>
-      <div class="info-item">
-        <div class="info-icon">🚚</div>
-        <div class="info-text">
-          <h4>Envíos</h4>
-          <p>Todo el país via Correos CR</p>
+        <div class="info-item" style="border:none;padding:10px 0">
+          <div class="info-icon">🚚</div>
+          <div class="info-text"><h4>Envíos</h4><p>Correos CR</p></div>
         </div>
-      </div>
-      <div class="info-item">
-        <div class="info-icon">⏰</div>
-        <div class="info-text">
-          <h4>Horario</h4>
-          <p>Lunes a Sábado, 8am - 8pm</p>
+        <div class="info-item" style="border:none;padding:10px 0">
+          <div class="info-icon">⏰</div>
+          <div class="info-text"><h4>Horario</h4><p>Lun-Sáb, 8am-8pm</p></div>
         </div>
       </div>
 
