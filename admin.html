@@ -399,6 +399,21 @@
     </div>
   </div>
 
+
+    <!-- Sección Por Expirar -->
+    <div id="expirando-section" class="content-section" style="display:none">
+      <div class="form-card">
+        <h2>⏳ Productos próximos a perder imagen</h2>
+        <p style="color:#718096;margin-bottom:20px">Productos vendidos cuya imagen se borrará automáticamente al cumplir 7 días.</p>
+        <div id="expirando-loading" style="text-align:center;padding:40px;color:#718096">Cargando...</div>
+        <div id="expirando-empty" style="display:none;text-align:center;padding:40px;color:#48bb78">
+          <div style="font-size:40px;margin-bottom:12px">✅</div>
+          <div style="font-size:16px;font-weight:600">No hay productos próximos a expirar</div>
+        </div>
+        <div id="expirando-grid" style="display:none;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px"></div>
+      </div>
+    </div>
+
   <script src="js/admin.js"></script>
 </body>
 </html>
