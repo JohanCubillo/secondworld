@@ -749,9 +749,8 @@ async function editProduct(id) {
     document.getElementById('product-submit-btn').textContent = 'Actualizar Producto';
     document.getElementById('product-cancel-btn').classList.remove('hidden');
 
-    // Mostrar sección de imágenes extra
-    document.getElementById('extra-images-section').style.display = 'block';
-    cargarImagenesExtra(product.id);
+    // Cargar imágenes existentes en el preview
+    cargarPreviewImagenesExistentes(product);
     
     window.scrollTo({ top: 0, behavior: 'smooth' });
   } catch (error) {
@@ -1138,3 +1137,40 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+async function cargarPreviewImagenesExistentes(product) {
+  const preview = document.getElementById('preview-imagenes');
+  if (!preview) return;
+  preview.innerHTML = '';
+
+  // Imagen principal
+  if (product.image) {
+    const div = document.createElement('div');
+    div.style.cssText = 'position:relative;width:80px;height:80px;border-radius:8px;overflow:hidden;border:2px solid #667eea';
+    div.innerHTML = '<img src="' + product.image + '" style="width:100%;height:100%;object-fit:cover">' +
+      '<div style="position:absolute;bottom:0;left:0;right:0;background:rgba(102,126,234,0.8);color:white;font-size:9px;text-align:center;padding:2px;font-weight:700">PRINCIPAL</div>';
+    preview.appendChild(div);
+  }
+
+  // Imágenes adicionales
+  try {
+    const res = await fetch(API_URL + '/products/' + product.id + '/images');
+    const images = await res.json();
+    images.forEach(img => {
+      const div = document.createElement('div');
+      div.style.cssText = 'position:relative;width:80px;height:80px;border-radius:8px;overflow:hidden;border:2px solid #e2e8f0';
+      div.innerHTML = '<img src="' + img.image + '" style="width:100%;height:100%;object-fit:cover">' +
+        '<button onclick="eliminarImagenExistente(' + img.id + ', this.parentNode)" style="position:absolute;top:2px;right:2px;background:rgba(0,0,0,0.6);color:white;border:none;border-radius:50%;width:18px;height:18px;cursor:pointer;font-size:10px;line-height:1">×</button>';
+      preview.appendChild(div);
+    });
+  } catch(e) {}
+}
+
+async function eliminarImagenExistente(imageId, el) {
+  const productId = document.getElementById('product-id').value;
+  if (!productId) return;
+  try {
+    await fetch(API_URL + '/products/' + productId + '/images/' + imageId, { method: 'DELETE' });
+    el.remove();
+  } catch(e) { alert('Error al eliminar imagen'); }
+}
