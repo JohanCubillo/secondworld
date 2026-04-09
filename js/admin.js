@@ -58,6 +58,7 @@ function showTab(tab) {
   section.style.display = 'block';
 
   if (tab === 'expirando') loadExpirando();
+  if (tab === 'contacto') loadContacto();
 }
 
 async function loadExpirando() {
@@ -953,4 +954,63 @@ function showSuccess(message) {
   successDiv.textContent = message;
   successDiv.classList.remove('hidden');
   setTimeout(() => successDiv.classList.add('hidden'), 3000);
+}
+
+async function loadContacto() {
+  const loading = document.getElementById('contacto-loading');
+  const empty = document.getElementById('contacto-empty');
+  const lista = document.getElementById('contacto-lista');
+  loading.style.display = 'block';
+  empty.style.display = 'none';
+  lista.innerHTML = '';
+
+  try {
+    const res = await fetch(`${API_URL}/contacto`);
+    const mensajes = await res.json();
+    loading.style.display = 'none';
+
+    // Actualizar badge
+    const noLeidos = mensajes.filter(m => !m.leido).length;
+    document.getElementById('tab-contacto').textContent = noLeidos > 0
+      ? `💬 Mensajes (${noLeidos})`
+      : '💬 Mensajes';
+
+    if (!mensajes.length) { empty.style.display = 'block'; return; }
+
+    lista.innerHTML = mensajes.map(m => `
+      <div id="msg-${m.id}" style="background:${m.leido ? '#f8fafc' : '#f0f4ff'};border:1.5px solid ${m.leido ? '#e2e8f0' : '#667eea'};border-radius:14px;padding:20px;margin-bottom:12px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">
+          <div>
+            <span style="font-weight:700;color:#1a1f3a;font-size:15px">${m.nombre}</span>
+            ${!m.leido ? '<span style="background:#667eea;color:white;font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px;margin-left:8px">NUEVO</span>' : ''}
+            <div style="font-size:13px;color:#718096;margin-top:2px">${m.email} ${m.telefono ? '• ' + m.telefono : ''}</div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <span style="font-size:12px;color:#a0aec0">${new Date(m.createdAt || m.created_at).toLocaleDateString('es-CR')}</span>
+            ${!m.leido ? `<button onclick="marcarLeido(${m.id})" style="padding:6px 12px;background:#667eea;color:white;border:none;border-radius:8px;cursor:pointer;font-size:12px;font-weight:600">✓ Leer</button>` : ''}
+            <button onclick="eliminarMensaje(${m.id})" style="padding:6px 12px;background:#fff5f5;color:#e53e3e;border:1px solid #fed7d7;border-radius:8px;cursor:pointer;font-size:12px">🗑️</button>
+          </div>
+        </div>
+        <div style="background:white;border-radius:8px;padding:12px;margin-bottom:8px">
+          <div style="font-size:12px;font-weight:700;color:#667eea;margin-bottom:4px">📌 ${m.asunto}</div>
+          <div style="font-size:14px;color:#4a5568;line-height:1.6">${m.mensaje}</div>
+        </div>
+        <a href="https://wa.me/506${(m.telefono||'').replace(/[^0-9]/g,'')}" target="_blank" style="font-size:12px;color:#25D366;text-decoration:none;font-weight:600">📱 Responder por WhatsApp</a>
+        ${m.email ? `<a href="mailto:${m.email}" style="font-size:12px;color:#667eea;text-decoration:none;font-weight:600;margin-left:16px">✉️ Responder por Email</a>` : ''}
+      </div>
+    `).join('');
+  } catch(e) {
+    loading.textContent = '❌ Error cargando mensajes';
+  }
+}
+
+async function marcarLeido(id) {
+  await fetch(`${API_URL}/contacto/${id}/leer`, { method: 'PATCH' });
+  loadContacto();
+}
+
+async function eliminarMensaje(id) {
+  if (!confirm('¿Eliminar este mensaje?')) return;
+  await fetch(`${API_URL}/contacto/${id}`, { method: 'DELETE' });
+  document.getElementById('msg-' + id).remove();
 }

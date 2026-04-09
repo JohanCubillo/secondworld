@@ -52,6 +52,7 @@
       <div class="tab" onclick="showTab('orders')">🛒 Órdenes</div>
       <div class="tab" onclick="showTab('users')">👥 Usuarios</div>
       <div class="tab" onclick="showTab('expirando')" id="tab-expirando">⏳ Por Expirar</div>
+      <div class="tab" onclick="showTab('contacto')" id="tab-contacto">💬 Mensajes</div>
     </div>
 
     <div id="success-message" class="success-message hidden"></div>
@@ -411,6 +412,20 @@
           <div style="font-size:16px;font-weight:600">No hay productos próximos a expirar</div>
         </div>
         <div id="expirando-grid" style="display:none;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px"></div>
+      </div>
+    </div>
+
+
+    <!-- Sección Contacto -->
+    <div id="contacto-section" class="content-section" style="display:none">
+      <div class="form-card">
+        <h2>💬 Mensajes de Contacto</h2>
+        <div id="contacto-loading" style="text-align:center;padding:40px;color:#718096">Cargando...</div>
+        <div id="contacto-empty" style="display:none;text-align:center;padding:40px">
+          <div style="font-size:40px;margin-bottom:12px">📭</div>
+          <div style="font-size:16px;font-weight:600;color:#718096">No hay mensajes aún</div>
+        </div>
+        <div id="contacto-lista"></div>
       </div>
     </div>
 
