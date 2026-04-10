@@ -1,3 +1,13 @@
+
+// ── LOADER GLOBAL ──
+function showLoader(texto = 'Guardando...') {
+  const loader = document.getElementById('global-loader');
+  document.getElementById('loader-text').textContent = texto;
+  loader.style.display = 'flex';
+}
+function hideLoader() {
+  document.getElementById('global-loader').style.display = 'none';
+}
 const API_URL = '/api/v1';
 let currentUser = null;
 let stores = [];
@@ -512,6 +522,7 @@ async function loadDiscounts() {
 
 document.getElementById('discount-form').addEventListener('submit', async (e) => {
   e.preventDefault();
+  showLoader('Guardando descuento...');
   
   const discountId = document.getElementById('discount-id').value;
   const discountData = {
@@ -648,6 +659,7 @@ async function fileToBase64(file) {
 // ==================== PRODUCTS CRUD ====================
 document.getElementById('product-form').addEventListener('submit', async (e) => {
   e.preventDefault();
+  showLoader('Guardando producto...');
   
   const productId = document.getElementById('product-id').value;
   const imageFiles = document.getElementById('product-image').files;
@@ -713,12 +725,14 @@ document.getElementById('product-form').addEventListener('submit', async (e) => 
       }
     }
 
+    hideLoader();
     showSuccess(productId ? 'Producto actualizado exitosamente' : 'Producto agregado exitosamente');
     const preview = document.getElementById('preview-imagenes'); if (preview) preview.innerHTML = '';
     document.getElementById('product-form').reset();
     cancelProductEdit();
     loadProducts();
   } catch (error) {
+    hideLoader();
     alert('Error al guardar producto: ' + error.message);
     console.error(error);
   }
@@ -788,6 +802,7 @@ async function deleteProduct(id) {
 // ==================== STORES CRUD ====================
 document.getElementById('store-form').addEventListener('submit', async (e) => {
   e.preventDefault();
+  showLoader('Guardando tienda...');
   
   const storeId = document.getElementById('store-id').value;
   const logoFile = document.getElementById('store-logo').files[0];
@@ -881,6 +896,7 @@ async function deleteStore(id) {
 // ==================== CATEGORIES CRUD ====================
 document.getElementById('category-form').addEventListener('submit', async (e) => {
   e.preventDefault();
+  showLoader('Guardando categoría...');
   
   const categoryId = document.getElementById('category-id').value;
   const imageFile = document.getElementById('category-image').files[0];
