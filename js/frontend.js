@@ -8,6 +8,7 @@ let currentScrollPosition = 0;
 
 // ==================== LOAD DATA ====================
 async function loadAllData() {
+  if (!document.getElementById('products-grid')) return;
   await Promise.all([
     loadStores(),
     loadCategories(),
