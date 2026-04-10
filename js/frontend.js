@@ -736,3 +736,11 @@ function closeMobileMenu() {
   const menu = document.getElementById('mobile-menu');
   menu.classList.remove('open');
 }
+
+function toggleFilters() {
+  const panel = document.getElementById('filters-panel');
+  const btn = document.querySelector('.filter-toggle-btn');
+  panel.classList.toggle('open');
+  btn.style.background = panel.classList.contains('open') ? '#667eea' : '#f7f7ff';
+  btn.style.color = panel.classList.contains('open') ? 'white' : '#667eea';
+}
