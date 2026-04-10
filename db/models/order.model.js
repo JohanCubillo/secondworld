@@ -91,7 +91,7 @@ const OrderSchema = {
     allowNull: false,
   },
   status: {
-    type: DataTypes.ENUM('pendiente', 'pago_verificado', 'enviado', 'entregado', 'cancelado'),
+    type: DataTypes.STRING,
     allowNull: false,
     defaultValue: 'pendiente',
   },

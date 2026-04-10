@@ -8,7 +8,6 @@ console.log('   DB_DATABASE:', config.dbDatabase);
 console.log('   DB_HOST:', config.dbHost);
 console.log('   DB_PORT:', config.dbPort);
 
-// Usar opciones explícitas en lugar de URI
 const sequelize = new Sequelize(config.dbDatabase, config.dbUser, config.dbPassword, {
   host: config.dbHost,
   port: config.dbPort,
@@ -16,9 +15,16 @@ const sequelize = new Sequelize(config.dbDatabase, config.dbUser, config.dbPassw
   dialectOptions: {
     ssl: false
   },
-  logging: console.log // Para ver las queries SQL
+  define: {
+    schema: 'secondworld'
+  },
+  logging: console.log
 });
 
 setupModels(sequelize);
+
+sequelize.query("SET search_path TO secondworld, public;").catch(e => 
+  console.log('search_path warning:', e.message)
+);
 
 module.exports = sequelize;

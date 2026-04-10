@@ -147,7 +147,7 @@ async function loadStores() {
     const tbody = document.getElementById('stores-tbody');
     tbody.innerHTML = stores.map(s => `
       <tr>
-        <td><img src="${s.logo || 'https://via.placeholder.com/60'}" class="product-image"></td>
+        <td><img src="${s.logo || 'https://placehold.co/60'}" class="product-image"></td>
         <td><strong>${s.name}</strong></td>
         <td>${s.description || 'Sin descripción'}</td>
         <td><span class="badge ${s.isActive ? 'badge-success' : 'badge-danger'}">${s.isActive ? 'Activa' : 'Inactiva'}</span></td>
@@ -179,7 +179,7 @@ async function loadCategories() {
     const tbody = document.getElementById('categories-tbody');
     tbody.innerHTML = categories.map(c => `
       <tr>
-        <td><img src="${c.image || 'https://via.placeholder.com/60'}" class="product-image"></td>
+        <td><img src="${c.image || 'https://placehold.co/60'}" class="product-image"></td>
         <td><strong>${c.name}</strong></td>
         <td>${c.store ? c.store.name : 'Sin tienda'}</td>
         <td>${c.products ? c.products.length : 0} productos</td>
@@ -206,7 +206,7 @@ async function loadProducts() {
       const finalPrice = p.price - (p.price * p.discount / 100);
       return `
         <tr>
-          <td><img src="${p.image}" class="product-image" onerror="this.src='https://via.placeholder.com/60'"></td>
+          <td><img src="${p.image}" class="product-image" onerror="this.src='https://placehold.co/60'"></td>
           <td>
             <strong>${p.name}</strong>
             ${p.isFlashSale ? '<span class="badge badge-flash">🔥 REMATE</span>' : ''}

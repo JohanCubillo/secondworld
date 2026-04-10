@@ -521,11 +521,11 @@
             <div class="cart-item-name">${item.name}</div>
             <div class="cart-item-details">
               Cantidad: ${item.quantity} | 
-              Precio: ₡${item.price.toFixed(2)}
+              Precio: ₡${parseFloat(item.price).toFixed(2)}
             </div>
           </div>
           <div>
-            <div class="cart-item-price">₡${(item.price * item.quantity).toFixed(2)}</div>
+            <div class="cart-item-price">₡${(parseFloat(item.price) * item.quantity).toFixed(2)}</div>
             <button class="remove-item" onclick="removeItem(${index})">🗑️</button>
           </div>
         </div>
@@ -536,7 +536,7 @@
 
     // Actualizar resumen
     function updateSummary() {
-      const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      const subtotal = cart.reduce((sum, item) => sum + (parseFloat(item.price) * item.quantity), 0);
       const total = subtotal + SHIPPING_COST;
 
       document.getElementById('subtotal').textContent = `₡${subtotal.toFixed(2)}`;
@@ -609,7 +609,7 @@
         // Convertir imagen a base64
         const proofBase64 = await fileToBase64(proofFile);
         
-        const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        const subtotal = cart.reduce((sum, item) => sum + (parseFloat(item.price) * item.quantity), 0);
         const total = subtotal + SHIPPING_COST;
 
         const orderData = {

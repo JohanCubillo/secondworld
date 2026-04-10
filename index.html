@@ -33,7 +33,18 @@
         <button class="cart-button" onclick="openCartModal()">
           🛒 Carrito (<span id="cart-count">0</span>)
         </button>
+        <button class="hamburger-btn" id="hamburger-btn" onclick="toggleMobileMenu()">
+          <span></span><span></span><span></span>
+        </button>
       </div>
+    </div>
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="#" class="mobile-nav-link" onclick="closeMobileMenu()">Inicio</a>
+      <a href="#stores" class="mobile-nav-link" onclick="closeMobileMenu()">Tiendas</a>
+      <a href="#productos" class="mobile-nav-link" onclick="closeMobileMenu()">Productos</a>
+      <a href="order-confirmation.html" class="mobile-nav-link">Rastrear Orden</a>
+      <a href="contacto.html" class="mobile-nav-link">Contacto</a>
+      <a href="politicas.html" class="mobile-nav-link">Políticas</a>
     </div>
   </header>
 

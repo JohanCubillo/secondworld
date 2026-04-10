@@ -31,7 +31,7 @@ async function loadStores() {
       
       return `
         <div class="mini-store-card" onclick="filterByStore(${store.id})">
-          <img src="${store.logo || 'https://via.placeholder.com/80'}" class="mini-store-logo" alt="${store.name}">
+          <img src="${store.logo || 'https://placehold.co/80'}" class="mini-store-logo" alt="${store.name}">
           <div class="mini-store-name">${store.name}</div>
           <div class="mini-store-count">${productCount} productos</div>
         </div>
@@ -109,7 +109,7 @@ async function loadFlashSalesCarousel() {
         <div class="carousel-item">
           <div class="product-card" style="background: white;">
             <div class="product-image-container">
-              <img src="${p.image}" alt="${p.name}" class="product-image" onerror="this.src='https://via.placeholder.com/300'">
+              <img src="${p.image}" alt="${p.name}" class="product-image" onerror="this.src='https://placehold.co/300'">
               <div class="product-badges">
                 <span class="badge badge-flash">🔥 REMATE</span>
                 <span class="badge badge-discount">-${discount}%</span>
@@ -192,7 +192,7 @@ function displayProducts(products) {
     return `
       <div class="product-card" onclick="window.location.href='producto.html?id=${p.id}'" style="cursor:pointer">
         <div class="product-image-container">
-          <img src="${p.image}" alt="${p.name}" class="product-image" onerror="this.src='https://via.placeholder.com/300'">
+          <img src="${p.image}" alt="${p.name}" class="product-image" onerror="this.src='https://placehold.co/300'">
           <div class="product-badges">
             ${p.isFlashSale ? '<span class="badge badge-flash">🔥 REMATE</span>' : ''}
             ${hasDiscount && !p.isFlashSale ? `<span class="badge badge-discount">-${discount}%</span>` : ''}
@@ -348,7 +348,7 @@ function renderCartModal() {
       <img src="${item.image}" alt="${item.name}">
       <div class="cart-item-details">
         <div class="cart-item-name">${item.name}</div>
-        <div class="cart-item-price">₡${item.price.toFixed(2)}</div>
+        <div class="cart-item-price">₡${parseFloat(item.price).toFixed(2)}</div>
         <div class="cart-item-actions">
           <button class="qty-btn" onclick="updateQuantity(${index}, -1)">-</button>
           <span class="qty-display">${item.quantity}</span>
@@ -382,7 +382,7 @@ function removeFromCart(index) {
 }
 
 function updateCartSummary() {
-  const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const subtotal = cart.reduce((sum, item) => sum + (parseFloat(item.price) * item.quantity), 0);
   const shipping = 2500;
   const total = subtotal + shipping;
 
@@ -726,3 +726,13 @@ document.addEventListener('DOMContentLoaded', () => {
     showWhatsAppBanner();
   }, 30000);
 });
+
+function toggleMobileMenu() {
+  const menu = document.getElementById('mobile-menu');
+  menu.classList.toggle('open');
+}
+
+function closeMobileMenu() {
+  const menu = document.getElementById('mobile-menu');
+  menu.classList.remove('open');
+}

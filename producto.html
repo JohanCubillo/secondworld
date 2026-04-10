@@ -239,7 +239,7 @@
           <div class="divider"></div>
           <div class="producto-desc" id="info-desc"></div>
           <div class="tienda-row" id="info-tienda"></div>
-          <button class="add-cart-btn" id="btn-carrito" onclick="agregarAlCarrito()">
+          <button class="add-cart-btn" id="btn-carrito" onclick="agregarAlCarrito(event)">
             🛒 Agregar al Carrito
           </button>
           <a href="https://wa.me/50670259400" target="_blank" class="wa-btn">
@@ -345,18 +345,17 @@
       el.classList.add('active');
     }
 
-    function agregarAlCarrito() {
+    function agregarAlCarrito(event) {
       if (!productoActual) return;
-      // Usar la función global del frontend.js
-      addToCart({
-        id: productoActual.id,
-        name: productoActual.name,
-        price: productoActual.discount > 0
+      addToCart(
+        productoActual.id,
+        productoActual.name,
+        productoActual.discount > 0
           ? productoActual.price * (1 - productoActual.discount/100)
           : productoActual.price,
-        image: productoActual.image,
-        stock: productoActual.stock
-      });
+        productoActual.image,
+        event || window.event
+      );
       document.getElementById('btn-carrito').textContent = '✅ Agregado al carrito';
       setTimeout(() => {
         document.getElementById('btn-carrito').textContent = '🛒 Agregar al Carrito';

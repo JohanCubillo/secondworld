@@ -1363,3 +1363,64 @@ body {
     margin: 30px 0 0 0 !important;
   }
 }
+/* ── HAMBURGUESA Y MOBILE MENU ── */
+.hamburger-btn {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+.hamburger-btn span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: white;
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  background: rgba(10,14,39,0.98);
+  padding: 16px 24px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.mobile-menu.open { display: flex; }
+.mobile-nav-link {
+  color: rgba(255,255,255,0.85);
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  transition: color 0.2s;
+}
+.mobile-nav-link:last-child { border-bottom: none; }
+.mobile-nav-link:hover { color: #667eea; }
+
+/* ── HERO BUTTONS ── */
+@media (max-width: 768px) {
+  .hamburger-btn { display: flex; }
+  .hero-buttons {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .hero-buttons .btn {
+    width: 100%;
+    padding: 14px;
+  }
+
+  /* ── FOOTER RESPONSIVE ── */
+  footer > div > div:first-child {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+  footer > div > div:last-child {
+    flex-direction: column !important;
+    text-align: center !important;
+    gap: 8px !important;
+  }
+}
