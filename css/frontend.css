@@ -1561,3 +1561,14 @@ body {
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
 }
+
+/* Fix lupita search box */
+.filters .search-box::before,
+.filters-top-row .search-box::before {
+  display: none !important;
+  content: none !important;
+}
+.filters .search-input,
+.filters-top-row .search-input {
+  padding-left: 14px !important;
+}
