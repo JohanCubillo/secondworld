@@ -233,6 +233,8 @@ function filterProducts() {
   const storeFilter = document.getElementById('filter-store').value;
   const categoryFilter = document.getElementById('filter-category').value;
   const conditionFilter = document.getElementById('filter-condition').value;
+  const sizeEl = document.getElementById("filter-size");
+  const sizeFilter = sizeEl ? sizeEl.value : "";
 
   const filtered = allProducts.filter(p => {
     const matchSearch = p.name.toLowerCase().includes(searchTerm) || 
@@ -241,7 +243,8 @@ function filterProducts() {
     const matchCategory = !categoryFilter || p.categoryId == categoryFilter;
     const matchCondition = !conditionFilter || p.condition === conditionFilter;
 
-    return matchSearch && matchStore && matchCategory && matchCondition;
+    const matchSize = !sizeFilter || (p.size && p.size.toUpperCase() === sizeFilter.toUpperCase());
+    return matchSearch && matchStore && matchCategory && matchCondition && matchSize;
   });
 
   displayProducts(filtered);
@@ -691,6 +694,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (searchInput) searchInput.addEventListener('input', filterProducts);
   if (filterStore) filterStore.addEventListener('change', filterProducts);
   if (filterCategory) filterCategory.addEventListener('change', filterProducts);
+  const filterSize = document.getElementById("filter-size");
+  if (filterSize) filterSize.addEventListener("change", filterProducts);
   if (filterCondition) filterCondition.addEventListener('change', filterProducts);
 
   // Carousel scroll
