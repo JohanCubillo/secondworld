@@ -162,6 +162,8 @@ async function loadFlashSalesCarousel() {
           <div class="product-card" style="background: white;">
             <div class="product-image-container">
               <img src="${p.image}" alt="${p.name}" class="product-image" onerror="this.src='https://placehold.co/300'">
+          ${siteConfig.logo ? `<img src="${siteConfig.logo}" class="product-watermark" alt="logo">` : ''}
+              ${siteConfig.logo ? `<img src="${siteConfig.logo}" class="product-watermark" alt="logo">` : ''}
               <div class="product-badges">
                 <span class="badge badge-flash">🔥 REMATE</span>
                 <span class="badge badge-discount">-${discount}%</span>
@@ -245,6 +247,7 @@ function displayProducts(products) {
       <div class="product-card" onclick="window.location.href='producto.html?id=${p.id}'" style="cursor:pointer">
         <div class="product-image-container">
           <img src="${p.image}" alt="${p.name}" class="product-image" onerror="this.src='https://placehold.co/300'">
+          ${siteConfig.logo ? `<img src="${siteConfig.logo}" class="product-watermark" alt="logo">` : ''}
           <div class="product-badges">
             ${p.isFlashSale ? '<span class="badge badge-flash">🔥 REMATE</span>' : ''}
             ${hasDiscount && !p.isFlashSale ? `<span class="badge badge-discount">-${discount}%</span>` : ''}
