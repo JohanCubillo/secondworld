@@ -1,3 +1,54 @@
+
+// ── CONFIGURACIÓN GLOBAL ──
+let siteConfig = {};
+
+async function loadConfig() {
+  try {
+    const res = await fetch('/api/v1/configuracion');
+    siteConfig = await res.json();
+
+    // Aplicar logo en navbar
+    const navLogos = document.querySelectorAll('.logo');
+    navLogos.forEach(img => {
+      if (siteConfig.logo) img.src = siteConfig.logo;
+    });
+
+    // Aplicar logo en footer
+    const footerLogos = document.querySelectorAll('footer img');
+    footerLogos.forEach(img => {
+      if (siteConfig.logo) img.src = siteConfig.logo;
+    });
+
+    // Aplicar nombre tienda
+    const brandNames = document.querySelectorAll('.brand-name');
+    brandNames.forEach(el => {
+      if (siteConfig.nombre_tienda) el.textContent = siteConfig.nombre_tienda;
+    });
+
+    // Aplicar hero titulo
+    const heroTitle = document.querySelector('.hero-content h1');
+    if (heroTitle && siteConfig.hero_titulo) heroTitle.innerHTML = siteConfig.hero_titulo.replace(' ', '<br>');
+
+    // Aplicar hero descripcion
+    const heroDesc = document.querySelector('.hero-content p');
+    if (heroDesc && siteConfig.hero_descripcion) heroDesc.textContent = siteConfig.hero_descripcion;
+
+    // Aplicar botones hero
+    const btn1 = document.querySelector('.btn-primary');
+    if (btn1 && siteConfig.hero_btn1_texto) {
+      btn1.textContent = siteConfig.hero_btn1_texto;
+      btn1.href = siteConfig.hero_btn1_link || '#productos';
+    }
+    const btn2 = document.querySelector('.btn-secondary');
+    if (btn2 && siteConfig.hero_btn2_texto) {
+      btn2.textContent = siteConfig.hero_btn2_texto;
+      btn2.href = siteConfig.hero_btn2_link || '#';
+    }
+
+  } catch(e) {
+    console.error('Error cargando config:', e);
+  }
+}
 const API_URL = '/api/v1';
 let allProducts = [];
 let allStores = [];
@@ -686,6 +737,7 @@ function initSpaceBackground() {
 
 // ==================== INIT ====================
 document.addEventListener('DOMContentLoaded', () => {
+  loadConfig();
   // Filters - solo si existen los elementos
   const searchInput = document.getElementById('search-input');
   const filterStore = document.getElementById('filter-store');
