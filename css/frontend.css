@@ -1155,6 +1155,12 @@ body {
   color: rgba(255, 255, 255, 0.85);
 }
 
+.hero-buttons {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
 .btn {
   padding: 16px 32px;
   border-radius: 12px;
