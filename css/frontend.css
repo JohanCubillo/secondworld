@@ -1611,3 +1611,20 @@ body {
     flex-shrink: 0;
   }
 }
+
+/* ── FIX CAROUSEL REMATES ── */
+.carousel-item {
+  min-width: 280px !important;
+  max-width: 280px !important;
+}
+.carousel-item .product-image-container {
+  height: 280px !important;
+  overflow: hidden !important;
+}
+.carousel-item .product-image {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+}
