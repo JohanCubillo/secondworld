@@ -1572,3 +1572,22 @@ body {
 .filters-top-row .search-input {
   padding-left: 14px !important;
 }
+
+/* Fix lupa y filtros */
+.filters .search-box::before,
+.filters-top-row .search-box::before,
+.filters .search-box:before {
+  display: none !important;
+  content: '' !important;
+  background: none !important;
+}
+.filters .search-input {
+  padding-left: 14px !important;
+  background-image: none !important;
+}
+
+/* En desktop los filtros siempre visibles */
+@media (min-width: 769px) {
+  .filter-toggle-btn { display: none; }
+  .filters-panel { display: grid !important; grid-template-columns: 1fr 1fr 1fr 1fr; }
+}
