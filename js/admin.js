@@ -69,6 +69,7 @@ function showTab(tab) {
 
   if (tab === 'expirando') loadExpirando();
   if (tab === 'contacto') loadContacto();
+  if (tab === 'configuracion') loadConfiguracion();
 }
 
 async function loadExpirando() {
@@ -1190,3 +1191,87 @@ async function eliminarImagenExistente(imageId, el) {
     el.remove();
   } catch(e) { alert('Error al eliminar imagen'); }
 }
+
+// ── CONFIGURACIÓN ──
+async function loadConfiguracion() {
+  try {
+    const res = await fetch(`${API_URL}/configuracion`);
+    const config = await res.json();
+
+    document.getElementById('config-nombre').value = config.nombre_tienda || '';
+    document.getElementById('config-hero-titulo').value = config.hero_titulo || '';
+    document.getElementById('config-hero-desc').value = config.hero_descripcion || '';
+    document.getElementById('config-btn1-texto').value = config.hero_btn1_texto || '';
+    document.getElementById('config-btn1-link').value = config.hero_btn1_link || '';
+    document.getElementById('config-btn2-texto').value = config.hero_btn2_texto || '';
+    document.getElementById('config-btn2-link').value = config.hero_btn2_link || '';
+
+    if (config.logo) {
+      const preview = document.getElementById('config-logo-preview');
+      preview.src = config.logo;
+      preview.style.display = 'block';
+    }
+  } catch(e) {
+    console.error('Error cargando config:', e);
+  }
+}
+
+document.getElementById('config-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  showLoader('Guardando configuración...');
+
+  try {
+    const logoFile = document.getElementById('config-logo-file').files[0];
+    let logoVal = null;
+
+    if (logoFile) {
+      logoVal = await fileToBase64(logoFile);
+    }
+
+    const updates = {
+      nombre_tienda: document.getElementById('config-nombre').value,
+      hero_titulo: document.getElementById('config-hero-titulo').value,
+      hero_descripcion: document.getElementById('config-hero-desc').value,
+      hero_btn1_texto: document.getElementById('config-btn1-texto').value,
+      hero_btn1_link: document.getElementById('config-btn1-link').value,
+      hero_btn2_texto: document.getElementById('config-btn2-texto').value,
+      hero_btn2_link: document.getElementById('config-btn2-link').value,
+    };
+
+    if (logoVal) updates.logo = logoVal;
+
+    const res = await fetch(`${API_URL}/configuracion`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(updates)
+    });
+
+    if (res.ok) {
+      hideLoader();
+      showSuccess('Configuración guardada exitosamente');
+      if (logoVal) {
+        document.getElementById('config-logo-preview').src = logoVal;
+        document.getElementById('config-logo-preview').style.display = 'block';
+      }
+    } else {
+      hideLoader();
+      alert('Error al guardar configuración');
+    }
+  } catch(e) {
+    hideLoader();
+    alert('Error: ' + e.message);
+  }
+});
+
+// Preview del logo al seleccionar
+document.getElementById('config-logo-file').addEventListener('change', function() {
+  if (this.files[0]) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const preview = document.getElementById('config-logo-preview');
+      preview.src = e.target.result;
+      preview.style.display = 'block';
+    };
+    reader.readAsDataURL(this.files[0]);
+  }
+});

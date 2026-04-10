@@ -6,6 +6,7 @@ const { Order, OrderSchema } = require('./order.model');
 const { OrderItem, OrderItemSchema } = require('./order-item.model');
 const { ScheduledDiscount, ScheduledDiscountSchema } = require('./scheduled-discount.model');
 const { Contacto, ContactoSchema } = require('./contacto.model');
+const { Configuracion, ConfiguracionSchema } = require('./configuracion.model');
 const { ProductImage, ProductImageSchema } = require('./product-image.model');
 
 function setupModels(sequelize) {
@@ -17,6 +18,7 @@ function setupModels(sequelize) {
   OrderItem.init(OrderItemSchema, OrderItem.config(sequelize));
   ScheduledDiscount.init(ScheduledDiscountSchema, ScheduledDiscount.config(sequelize));
   Contacto.init(ContactoSchema, Contacto.config(sequelize));
+  Configuracion.init(ConfiguracionSchema, Configuracion.config(sequelize));
   ProductImage.init(ProductImageSchema, ProductImage.config(sequelize));
 
   // Asociaciones
