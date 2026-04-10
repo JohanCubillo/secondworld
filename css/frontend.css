@@ -1324,6 +1324,7 @@ body {
   }
 
   .hero-buttons {
+    display: flex;
     flex-direction: column;
     gap: 20px !important;
     padding: 0 24px !important;
