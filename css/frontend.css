@@ -1438,3 +1438,56 @@ body {
     gap: 8px !important;
   }
 }
+
+/* ── FILTROS COMPACTOS ── */
+.filters {
+  background: white;
+  border-radius: 16px;
+  padding: 12px 16px;
+  margin-bottom: 32px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.filters .search-box {
+  width: 100%;
+}
+.filters .search-input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+.filters .filters-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+.filters .filter-select {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 4px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 12px;
+  color: #4a5568;
+  background: white;
+  cursor: pointer;
+}
+@media (max-width: 768px) {
+  .filters .filters-row {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .filters .filters-row::-webkit-scrollbar { display: none; }
+  .filters .filter-select {
+    min-width: 90px;
+    font-size: 11px;
+    padding: 8px 4px;
+  }
+}

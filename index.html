@@ -114,32 +114,38 @@
 
       <!-- Filters -->
       <div class="filters">
+        <div class="search-box">
+          <input type="text" id="search-input" class="search-input" placeholder="🔍 Buscar productos...">
+        </div>
         <div class="filters-row">
-          <div class="search-box">
-            <input type="text" id="search-input" class="search-input" placeholder="Buscar productos...">
-          </div>
-          <div class="filter-group">
-            <label class="filter-label">Tienda</label>
-            <select id="filter-store" class="filter-select">
-              <option value="">Todas las tiendas</option>
-            </select>
-          </div>
-          <div class="filter-group">
-            <label class="filter-label">Categoría</label>
-            <select id="filter-category" class="filter-select">
-              <option value="">Todas las categorías</option>
-            </select>
-          </div>
-          <div class="filter-group">
-            <label class="filter-label">Condición</label>
-            <select id="filter-condition" class="filter-select">
-              <option value="">Todas</option>
-              <option value="nuevo">Nuevo</option>
-              <option value="como_nuevo">Como Nuevo</option>
-              <option value="usado">Usado</option>
-              <option value="muy_usado">Muy Usado</option>
-            </select>
-          </div>
+          <select id="filter-store" class="filter-select">
+            <option value="">🏪 Tiendas</option>
+          </select>
+          <select id="filter-category" class="filter-select">
+            <option value="">📁 Categorías</option>
+          </select>
+          <select id="filter-condition" class="filter-select">
+            <option value="">👕 Condición</option>
+            <option value="nuevo">Nuevo</option>
+            <option value="como_nuevo">Como Nuevo</option>
+            <option value="usado">Usado</option>
+            <option value="muy_usado">Muy Usado</option>
+          </select>
+          <select id="filter-size" class="filter-select" onchange="filterProducts()">
+            <option value="">📏 Talla</option>
+            <option value="XS">XS</option>
+            <option value="S">S</option>
+            <option value="M">M</option>
+            <option value="L">L</option>
+            <option value="XL">XL</option>
+            <option value="XXL">XXL</option>
+            <option value="32">32</option>
+            <option value="34">34</option>
+            <option value="36">36</option>
+            <option value="38">38</option>
+            <option value="40">40</option>
+            <option value="42">42</option>
+          </select>
         </div>
       </div>
 
