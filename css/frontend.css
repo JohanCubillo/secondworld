@@ -1591,3 +1591,23 @@ body {
   .filter-toggle-btn { display: none; }
   .filters-panel { display: grid !important; grid-template-columns: 1fr 1fr 1fr 1fr; }
 }
+
+/* ── PRODUCTOS SLIDER EN MÓVIL ── */
+@media (max-width: 768px) {
+  .products-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 16px;
+    padding: 8px 4px 16px;
+  }
+  .products-grid::-webkit-scrollbar { display: none; }
+  .product-card {
+    min-width: 75vw;
+    max-width: 75vw;
+    scroll-snap-align: start;
+    flex-shrink: 0;
+  }
+}
